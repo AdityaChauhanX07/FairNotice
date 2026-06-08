@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { chatCompletion, GROQ_MODEL } from "@/lib/groq";
 import { getAnalysisPrompt } from "@/lib/prompts/analysis";
 import { statuteStore, type StatuteResult } from "@/lib/rag/statute-store";
+import { parseLLMJson } from "@/lib/llm-json";
 import type { DocumentAnalysis, DocumentExtraction } from "@/lib/types";
 
 // The Groq SDK runs on the Node.js runtime.
@@ -15,21 +16,6 @@ interface AnalyzeRequestBody {
   extraction?: unknown;
   documentType?: unknown;
   jurisdiction?: unknown;
-}
-
-/**
- * Strip Markdown code fences (```json ... ``` or ``` ... ```) that the model
- * may wrap around its JSON, returning the bare JSON string.
- */
-function stripCodeFences(text: string): string {
-  let cleaned = text.trim();
-
-  if (cleaned.startsWith("```")) {
-    cleaned = cleaned.replace(/^```[a-zA-Z]*\s*\n?/, "");
-    cleaned = cleaned.replace(/\n?```\s*$/, "");
-  }
-
-  return cleaned.trim();
 }
 
 /**
@@ -173,7 +159,7 @@ export async function POST(request: Request) {
     // 4. Parse the model response.
     let analysis: DocumentAnalysis;
     try {
-      analysis = JSON.parse(stripCodeFences(llmResponse)) as DocumentAnalysis;
+      analysis = parseLLMJson<DocumentAnalysis>(llmResponse);
     } catch {
       return NextResponse.json(
         {

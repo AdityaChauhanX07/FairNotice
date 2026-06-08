@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { chatCompletion, GROQ_MODEL } from "@/lib/groq";
 import { getExtractionPrompt } from "@/lib/prompts/extraction";
+import { parseLLMJson } from "@/lib/llm-json";
 import type { DocumentExtraction } from "@/lib/types";
 
 // The Groq SDK runs on the Node.js runtime.
@@ -10,22 +11,6 @@ interface ExtractRequestBody {
   rawText?: unknown;
   documentType?: unknown;
   jurisdiction?: unknown;
-}
-
-/**
- * Strip Markdown code fences (```json ... ``` or ``` ... ```) that the model
- * may wrap around its JSON, returning the bare JSON string.
- */
-function stripCodeFences(text: string): string {
-  let cleaned = text.trim();
-
-  if (cleaned.startsWith("```")) {
-    // Remove the opening fence (with an optional language tag) and the closing fence.
-    cleaned = cleaned.replace(/^```[a-zA-Z]*\s*\n?/, "");
-    cleaned = cleaned.replace(/\n?```\s*$/, "");
-  }
-
-  return cleaned.trim();
 }
 
 export async function POST(request: Request) {
@@ -67,7 +52,7 @@ export async function POST(request: Request) {
 
     let extraction: DocumentExtraction;
     try {
-      extraction = JSON.parse(stripCodeFences(llmResponse)) as DocumentExtraction;
+      extraction = parseLLMJson<DocumentExtraction>(llmResponse);
     } catch {
       return NextResponse.json(
         {

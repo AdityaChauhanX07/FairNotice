@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { chatCompletion, GROQ_MODEL } from "@/lib/groq";
 import { getExplanationPrompt } from "@/lib/prompts/explain";
 import { getActionPlanPrompt } from "@/lib/prompts/action-plan";
+import { parseLLMJson } from "@/lib/llm-json";
 import type {
   ActionPlan,
   DocumentAnalysis,
@@ -21,21 +22,6 @@ interface ExplainRequestBody {
   documentType?: unknown;
   jurisdiction?: unknown;
   language?: unknown;
-}
-
-/**
- * Strip Markdown code fences (```json ... ``` or ``` ... ```) that the model
- * may wrap around its JSON, returning the bare JSON string.
- */
-function stripCodeFences(text: string): string {
-  let cleaned = text.trim();
-
-  if (cleaned.startsWith("```")) {
-    cleaned = cleaned.replace(/^```[a-zA-Z]*\s*\n?/, "");
-    cleaned = cleaned.replace(/\n?```\s*$/, "");
-  }
-
-  return cleaned.trim();
 }
 
 export async function POST(request: Request) {
@@ -117,10 +103,8 @@ export async function POST(request: Request) {
     let explanation: DocumentExplanation;
     let actionPlan: ActionPlan;
     try {
-      explanation = JSON.parse(
-        stripCodeFences(explanationRaw)
-      ) as DocumentExplanation;
-      actionPlan = JSON.parse(stripCodeFences(actionPlanRaw)) as ActionPlan;
+      explanation = parseLLMJson<DocumentExplanation>(explanationRaw);
+      actionPlan = parseLLMJson<ActionPlan>(actionPlanRaw);
     } catch {
       return NextResponse.json(
         {
