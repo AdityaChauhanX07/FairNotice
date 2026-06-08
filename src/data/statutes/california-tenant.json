@@ -1,0 +1,172 @@
+[
+  {
+    "id": "ca-civ-1946.2",
+    "statute_number": "California Civil Code §1946.2",
+    "title": "Just Cause Required for Eviction (Tenant Protection Act)",
+    "text": "After a tenant has continuously and lawfully occupied a residential real property for 12 months, the owner of the residential real property shall not terminate the tenancy without just cause, which shall be stated in the written notice to terminate tenancy. Just cause is either 'at-fault just cause' (such as default in payment of rent, breach of a material term of the lease, nuisance, or criminal activity) or 'no-fault just cause' (such as owner move-in, withdrawal from the rental market, or substantial remodel). For at-fault causes that are curable, the owner must first give the tenant a notice and an opportunity to cure before serving a notice to terminate.",
+    "topics": ["just cause eviction", "tenant rights", "lease termination", "notice period", "right to cure"],
+    "document_types": ["eviction_notice", "court_summons"],
+    "jurisdiction": "California",
+    "summary": "If you have lived in your home for at least 12 months, your landlord cannot evict you without a legally valid 'just cause' reason, which must be written in the eviction notice."
+  },
+  {
+    "id": "ca-civ-1946.2-d",
+    "statute_number": "California Civil Code §1946.2(d)",
+    "title": "Relocation Assistance for No-Fault Evictions",
+    "text": "For a no-fault just cause termination, the owner shall, regardless of the tenant's income, assist the tenant to relocate by providing a direct payment of one month of the tenant's rent that was in effect when the owner issued the notice to terminate the tenancy, or waiving in writing the payment of the last month's rent. The relocation assistance or rent waiver shall be provided within 15 calendar days of service of the notice. If the owner fails to provide the required relocation assistance, the notice to terminate is void.",
+    "topics": ["relocation assistance", "no-fault eviction", "just cause eviction", "tenant rights"],
+    "document_types": ["eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "If you are evicted for a no-fault reason (like the owner moving in), the landlord must pay you one month's rent in relocation assistance or waive your last month's rent — or the eviction notice is invalid."
+  },
+  {
+    "id": "ca-civ-1947.12",
+    "statute_number": "California Civil Code §1947.12",
+    "title": "Rent Cap / Annual Rent Increase Limit (AB 1482)",
+    "text": "An owner of residential real property shall not, over the course of any 12-month period, increase the gross rental rate for a dwelling more than 5 percent plus the percentage change in the cost of living (regional Consumer Price Index), or 10 percent, whichever is lower. For a new tenancy in which no tenant has continuously and lawfully occupied the property for more than 12 months, the owner may establish the initial rental rate. This section does not apply to housing that is exempt, such as housing built within the previous 15 years or certain single-family homes not owned by a corporation.",
+    "topics": ["rent cap", "rent increase", "rent control", "tenant rights"],
+    "document_types": ["eviction_notice", "other"],
+    "jurisdiction": "California",
+    "summary": "Your landlord generally cannot raise your rent by more than 5% plus inflation, or 10% total, whichever is lower, in any 12-month period."
+  },
+  {
+    "id": "ca-civ-1946.1",
+    "statute_number": "California Civil Code §1946.1",
+    "title": "30-Day and 60-Day Notice to Terminate Tenancy",
+    "text": "A tenancy or other estate at will or lease in real property may be terminated by either party giving written notice. If any tenant has resided in the dwelling for less than one year, the owner shall give at least 30 days' written notice. If any tenant has resided in the dwelling for one year or more, the owner shall give at least 60 days' written notice. The notice shall be given in the manner prescribed in Section 1162 of the Code of Civil Procedure. This section applies where the tenancy is not otherwise protected by just cause requirements.",
+    "topics": ["notice period", "lease termination", "30-day notice", "60-day notice", "tenant rights"],
+    "document_types": ["eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "To end a month-to-month tenancy, a landlord must give 30 days' written notice if you've lived there under a year, or 60 days' notice if you've lived there a year or more."
+  },
+  {
+    "id": "ccp-1161",
+    "statute_number": "California Code of Civil Procedure §1161",
+    "title": "3-Day Notice to Pay Rent or Quit / Cure or Quit",
+    "text": "A tenant is guilty of unlawful detainer when they continue in possession after default in the payment of rent and three days' written notice requiring payment of the rent or possession of the property has been served, or after neglecting or failing to perform other conditions of the lease and three days' notice to perform the condition or quit has been served. The three-day notice to pay rent must state the amount of rent due and the name, address, and telephone number of the person to whom rent is to be paid. Days are counted excluding Saturdays, Sundays, and judicial holidays for the pay-or-quit notice.",
+    "topics": ["3-day notice", "notice period", "nonpayment of rent", "right to cure", "unlawful detainer"],
+    "document_types": ["eviction_notice", "court_summons"],
+    "jurisdiction": "California",
+    "summary": "Before evicting for unpaid rent or a lease violation, a landlord must serve a 3-day notice giving you the chance to pay the rent owed (excluding weekends/holidays) or fix the problem to stop the eviction."
+  },
+  {
+    "id": "ca-civ-1950.5",
+    "statute_number": "California Civil Code §1950.5",
+    "title": "Security Deposit Rules and Return",
+    "text": "A landlord may not demand or receive a security deposit in an amount more than one month's rent, whether the property is furnished or unfurnished (effective July 1, 2024). No later than 21 calendar days after the tenant vacates, the landlord shall return the security deposit, or provide an itemized statement of any deductions together with the remaining balance. Deductions are limited to unpaid rent, repair of damages beyond normal wear and tear, and cleaning to return the unit to its condition at the start of the tenancy. A landlord who retains a deposit in bad faith may be liable for up to twice the amount of the deposit as damages.",
+    "topics": ["security deposit", "tenant rights", "move-out", "damages"],
+    "document_types": ["other", "eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "A landlord generally cannot charge more than one month's rent as a deposit and must return it, with any itemized deductions, within 21 days after you move out — or face penalties for keeping it in bad faith."
+  },
+  {
+    "id": "ca-civ-1942.5",
+    "statute_number": "California Civil Code §1942.5",
+    "title": "Protection Against Retaliatory Eviction",
+    "text": "A landlord may not retaliate against a tenant for lawfully and peaceably exercising rights, such as complaining to the landlord or a public agency about habitability, or lawfully organizing or participating in a tenants' association. If the tenant has exercised such a right within 180 days, the landlord may not recover possession, increase rent, or decrease services in retaliation. A landlord who violates this section is liable for actual damages and punitive damages of between one hundred dollars ($100) and two thousand dollars ($2,000) for each retaliatory act where the landlord acted with malice.",
+    "topics": ["retaliation", "tenant rights", "habitability", "just cause eviction"],
+    "document_types": ["eviction_notice", "court_summons"],
+    "jurisdiction": "California",
+    "summary": "A landlord cannot evict you, raise your rent, or cut services to punish you for complaining about repairs or organizing tenants within the prior 180 days."
+  },
+  {
+    "id": "ca-civ-1941.1",
+    "statute_number": "California Civil Code §1941.1",
+    "title": "Habitability Standards (Implied Warranty of Habitability)",
+    "text": "A dwelling shall be deemed untenantable if it substantially lacks any of the following: effective waterproofing and weather protection of roof and exterior walls; plumbing facilities in good working order; a water supply capable of producing hot and cold running water; heating facilities in good working order; electrical lighting and wiring in good working order; clean and sanitary buildings and grounds free from debris, vermin, and rodents; adequate trash receptacles; and floors, stairways, and railings maintained in good repair. The landlord has a duty to maintain the premises in a habitable condition.",
+    "topics": ["habitability", "repairs", "tenant rights", "warranty of habitability"],
+    "document_types": ["other", "eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "Your landlord is legally required to keep your home livable — including working plumbing, heat, hot water, electricity, weatherproofing, and a pest-free, sanitary condition."
+  },
+  {
+    "id": "ca-civ-1942",
+    "statute_number": "California Civil Code §1942",
+    "title": "Tenant's Repair and Deduct Remedy",
+    "text": "If within a reasonable time after written or oral notice the landlord neglects to make repairs needed to make the dwelling habitable, the tenant may either: (1) spend up to one month's rent to make the repairs and deduct the cost from the rent, or (2) vacate the premises and be discharged from further rent obligation. The repair-and-deduct remedy may not be used more than twice in any 12-month period. A reasonable time is presumed to be 30 days, though a shorter period may be reasonable depending on the circumstances.",
+    "topics": ["repairs", "repair and deduct", "habitability", "tenant rights"],
+    "document_types": ["other"],
+    "jurisdiction": "California",
+    "summary": "If your landlord fails to make necessary repairs after notice, you may pay for the repairs yourself (up to one month's rent) and deduct the cost from your rent, up to twice a year."
+  },
+  {
+    "id": "ca-civ-1942.4",
+    "statute_number": "California Civil Code §1942.4",
+    "title": "Prohibition on Collecting Rent for Untenantable Dwelling",
+    "text": "A landlord may not demand or collect rent, increase rent, or serve a notice to pay rent or quit if all of the following conditions exist: the dwelling substantially lacks habitability standards or is deemed substandard by a government agency; a public officer has notified the landlord in writing of the conditions; the conditions have existed for 35 days or more beyond the notice and were not caused by the tenant; and the conditions were not the result of the tenant's failure to allow access. A landlord who violates this section is liable for actual damages, special damages of $100 to $5,000, and attorney's fees.",
+    "topics": ["habitability", "nonpayment of rent", "repairs", "tenant rights", "3-day notice"],
+    "document_types": ["eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "If a government inspector has cited your home as substandard and the landlord hasn't fixed it within 35 days, the landlord cannot legally demand rent or serve a pay-or-quit notice."
+  },
+  {
+    "id": "ca-civ-789.3",
+    "statute_number": "California Civil Code §789.3",
+    "title": "Prohibition on Illegal Lockouts and Utility Shutoffs",
+    "text": "A landlord shall not, with intent to terminate the occupancy, willfully cause, directly or indirectly, the interruption or termination of any utility service furnished to the tenant, including water, heat, light, electricity, gas, telephone, elevator, or refrigeration. A landlord shall also not prevent the tenant from gaining reasonable access to the property by changing the locks, using a bootlock, or removing outside doors or windows, or remove the tenant's personal property. A landlord who violates this section is liable for actual damages and a penalty of up to one hundred dollars ($100) per day of violation, with a minimum of $250 per separate cause of action.",
+    "topics": ["illegal lockout", "utility shutoff", "self-help eviction", "tenant rights"],
+    "document_types": ["other", "eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "A landlord cannot force you out by shutting off utilities, changing the locks, or removing your belongings — only a sheriff can lawfully remove a tenant after a court order."
+  },
+  {
+    "id": "ccp-1174",
+    "statute_number": "California Code of Civil Procedure §1174",
+    "title": "Eviction Only by Court Order and Sheriff",
+    "text": "In an unlawful detainer action, if the court finds for the landlord, it shall enter judgment for possession and may issue a writ of possession. The actual removal of a tenant from the premises must be carried out by the sheriff or marshal pursuant to the writ of possession; the landlord may not personally remove the tenant. The sheriff serves the tenant with a notice to vacate, typically giving at least five days before a lockout is executed. A tenant may seek relief from forfeiture in cases of hardship.",
+    "topics": ["unlawful detainer", "writ of possession", "lockout", "court process", "tenant rights"],
+    "document_types": ["court_summons", "eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "You can only be physically removed from your home by a sheriff acting on a court-issued writ of possession after the landlord wins an eviction lawsuit — never directly by the landlord."
+  },
+  {
+    "id": "ccp-1167",
+    "statute_number": "California Code of Civil Procedure §1167",
+    "title": "Tenant's Time to Respond to an Unlawful Detainer Summons",
+    "text": "A defendant in an unlawful detainer action who is served with a summons and complaint must file a written response with the court within five days, excluding Saturdays, Sundays, and judicial holidays, after the summons is served. If the tenant fails to respond within this period, the landlord may request a default judgment. Filing a timely answer or other responsive pleading preserves the tenant's right to a trial.",
+    "topics": ["unlawful detainer", "court process", "summons", "deadline", "tenant rights"],
+    "document_types": ["court_summons"],
+    "jurisdiction": "California",
+    "summary": "If you are served with eviction court papers (a summons), you have only 5 court days (excluding weekends and holidays) to file a written response, or the landlord can win automatically by default."
+  },
+  {
+    "id": "ccp-1162",
+    "statute_number": "California Code of Civil Procedure §1162",
+    "title": "Methods of Serving Eviction Notices",
+    "text": "A notice to terminate tenancy or a notice to pay rent or quit must be served by one of the following methods: (1) personal delivery to the tenant; (2) if the tenant is absent from their residence and place of business, by leaving a copy with a person of suitable age and discretion at either place and mailing a copy to the tenant's residence ('substituted service'); or (3) if a place of residence and business cannot be ascertained, or a person of suitable age cannot be found, by affixing a copy in a conspicuous place on the property and mailing a copy ('nail and mail'). Improper service can render the notice and any resulting eviction defective.",
+    "topics": ["notice service", "notice period", "unlawful detainer", "procedural requirements", "tenant rights"],
+    "document_types": ["eviction_notice", "court_summons"],
+    "jurisdiction": "California",
+    "summary": "Eviction notices must be properly served — by personal delivery, substituted service, or posting-and-mailing — and improper service can make the eviction invalid."
+  },
+  {
+    "id": "ca-civ-1954",
+    "statute_number": "California Civil Code §1954",
+    "title": "Landlord's Right to Enter and Required Notice",
+    "text": "A landlord may enter a dwelling only in specified circumstances: in an emergency; to make necessary or agreed repairs or improvements; to show the unit to prospective tenants, buyers, or contractors; or pursuant to a court order. Except in an emergency or when the tenant has abandoned the unit, the landlord shall give the tenant reasonable written notice of intent to enter, normally 24 hours, and may enter only during normal business hours. The notice shall state the date, approximate time, and purpose of entry.",
+    "topics": ["right to entry", "privacy", "notice period", "tenant rights"],
+    "document_types": ["other"],
+    "jurisdiction": "California",
+    "summary": "Except in emergencies, your landlord must give you at least 24 hours' written notice and may only enter during normal business hours for a valid purpose like repairs or showings."
+  },
+  {
+    "id": "ca-civ-1940.2",
+    "statute_number": "California Civil Code §1940.2",
+    "title": "Prohibited Acts to Influence a Tenant to Vacate",
+    "text": "It is unlawful for a landlord to do any of the following for the purpose of influencing a tenant to vacate a dwelling: engage in forcible, willful, or threatening entry; commit significant and intentional violations of the entry-notice rules in Section 1954; or use, or threaten to use, force, willful threats, or menacing conduct that interferes with the tenant's quiet enjoyment of the premises and would create apprehension of harm. A violation subjects the landlord to a civil penalty of up to two thousand dollars ($2,000) for each violation.",
+    "topics": ["tenant harassment", "self-help eviction", "tenant rights", "quiet enjoyment"],
+    "document_types": ["other", "eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "A landlord cannot use threats, intimidation, force, or repeated illegal entries to pressure you into moving out, and can be fined up to $2,000 per violation for doing so."
+  },
+  {
+    "id": "ca-civ-1947.12-notice",
+    "statute_number": "California Civil Code §1947.12(h)",
+    "title": "Just Cause and Rent Cap Disclosure Requirement",
+    "text": "An owner of residential property subject to the Tenant Protection Act must provide written notice to the tenant of the just cause and rent increase limitations. For tenancies existing before July 1, 2020, the notice may be provided in the rental agreement or as a written notice; for tenancies commenced or renewed after that date, the notice must be provided as an addendum to the lease or as a written notice signed by the tenant. The required statutory language informs tenants that the property is subject to rent increase limits and that the tenant may only be evicted for just cause.",
+    "topics": ["required notice content", "just cause eviction", "rent cap", "disclosure", "tenant rights"],
+    "document_types": ["other", "eviction_notice"],
+    "jurisdiction": "California",
+    "summary": "Landlords subject to the Tenant Protection Act must give tenants a written disclosure explaining that the rent increase caps and just-cause eviction protections apply."
+  }
+]

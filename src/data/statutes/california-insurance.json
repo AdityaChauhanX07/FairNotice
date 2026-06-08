@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ca-ins-10169",
+    "statute_number": "California Insurance Code §10169",
+    "title": "Independent Medical Review of Denied Health Claims",
+    "text": "A health insurer subject to the Department of Insurance shall provide an independent medical review (IMR) process for enrollees whose claims for health care services have been denied, modified, or delayed on the basis of medical necessity, or denied as experimental or investigational. An insured who has been denied coverage may apply to the Department of Insurance for independent medical review at no cost. If the independent reviewer determines the service is medically necessary, the insurer shall promptly provide the service. The IMR decision is binding on the insurer.",
+    "topics": ["independent medical review", "claim denial", "appeal rights", "medical necessity"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "If your health insurer denies a claim as not medically necessary or experimental, you have the right to a free, binding Independent Medical Review through the California Department of Insurance."
+  },
+  {
+    "id": "ca-hsc-1374.30",
+    "statute_number": "California Health and Safety Code §1374.30",
+    "title": "Independent Medical Review (Knox-Keene / DMHC Plans)",
+    "text": "For health care service plans regulated by the Department of Managed Health Care, enrollees have the right to an Independent Medical Review of disputed health care services. The enrollee may apply for IMR after participating in the plan's grievance process for at least 30 days, or sooner in cases of urgent need or where the plan has not responded. There is no cost to the enrollee. The IMR is conducted by independent medical professionals, and a decision in favor of the enrollee is binding on the plan, which must promptly implement it.",
+    "topics": ["independent medical review", "claim denial", "appeal rights", "grievance", "managed care"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "If you have an HMO or managed care plan and a service is denied, you can request a free, binding Independent Medical Review through the Department of Managed Health Care, generally after 30 days in the plan's grievance process."
+  },
+  {
+    "id": "ca-ins-10123.13",
+    "statute_number": "California Insurance Code §10123.13",
+    "title": "Timeframe for Health Claim Decisions and Payment",
+    "text": "An insurer that issues disability (health) insurance shall reimburse claims, or contest or deny a claim, within 30 working days after receipt of the claim if the claim is submitted electronically, or within 30 working days for a complete written claim. If the insurer contests or denies a claim, it must notify the claimant in writing of the reasons. If an uncontested claim is not reimbursed within the required time, the insurer shall pay interest on the claim. Failure to comply may constitute an unfair claims settlement practice.",
+    "topics": ["claim timeline", "claim denial", "payment deadline", "required notice content"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "Your health insurer generally must pay, contest, or deny a complete claim within 30 working days and tell you in writing why — and owes you interest if it pays an undisputed claim late."
+  },
+  {
+    "id": "ca-ccr-2695.7",
+    "statute_number": "10 California Code of Regulations §2695.7 (Fair Claims Settlement Practices)",
+    "title": "Required Content and Timing of Claim Denials",
+    "text": "Upon receiving proof of claim, every insurer shall immediately, but no later than 40 calendar days, accept or deny the claim in whole or in part. Where a claim is denied, the insurer shall provide the claimant with a written statement listing all bases for the denial and the factual and legal reasons for each. The written denial shall include reference to the specific policy provisions, conditions, or exclusions on which the denial is based. The insurer must also disclose the claimant's right to have the matter reviewed by the California Department of Insurance.",
+    "topics": ["required notice content", "claim denial", "claim timeline", "fair claims practices"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "When an insurer denies your claim, it must give you a written explanation citing the specific policy provisions and reasons, and tell you that you can have the Department of Insurance review the decision."
+  },
+  {
+    "id": "ca-ins-790.03",
+    "statute_number": "California Insurance Code §790.03(h)",
+    "title": "Unfair Claims Settlement Practices (Bad Faith)",
+    "text": "It is an unfair practice for an insurer, when liability has become reasonably clear, to engage in any of the following: misrepresenting pertinent facts or policy provisions; failing to acknowledge and act reasonably promptly upon communications about claims; failing to adopt and implement reasonable standards for the prompt investigation and processing of claims; not attempting in good faith to effectuate prompt, fair, and equitable settlements; or failing to provide a reasonable explanation of the basis for a denial. These practices, when knowingly committed or performed with such frequency as to indicate a general business practice, are prohibited.",
+    "topics": ["bad faith", "unfair claims practices", "claim denial", "insurer duties"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "Insurers must handle claims promptly, fairly, and in good faith; unreasonably denying or delaying a claim, or failing to explain a denial, can be an illegal unfair claims practice."
+  },
+  {
+    "id": "ca-hsc-1368",
+    "statute_number": "California Health and Safety Code §1368",
+    "title": "Grievance and Appeal Process for Health Plans",
+    "text": "Every health care service plan shall maintain a grievance system approved by the Department of Managed Health Care under which enrollees may submit grievances. The plan must resolve grievances within 30 days. For grievances involving an imminent and serious threat to the health of the enrollee, including severe pain, the plan must provide expedited review and resolve the grievance within 72 hours. The plan must provide written notice of the disposition of the grievance and inform the enrollee of the right to contact the Department and seek Independent Medical Review.",
+    "topics": ["grievance", "appeal rights", "claim denial", "expedited review", "managed care"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "Health plans must let you file a grievance and resolve it within 30 days (or 72 hours for urgent health threats), then notify you in writing and tell you about your further appeal rights."
+  },
+  {
+    "id": "ca-ins-10123.135",
+    "statute_number": "California Insurance Code §10123.135",
+    "title": "Notice of Appeal Rights on Claim Denial",
+    "text": "When an insurer denies or modifies a claim for health care services, the written notice of denial shall include a clear and concise explanation of the reasons for the insurer's decision, a description of the criteria or guidelines used, and the clinical reasons for decisions regarding medical necessity. The notice shall inform the insured of the right to appeal the decision, the procedure for filing an appeal, and the timeframes that apply. The insurer must include information on how to obtain review by the Department of Insurance.",
+    "topics": ["required notice content", "appeal rights", "claim denial", "medical necessity"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "A health claim denial must clearly explain the reasons and the medical criteria used, and must tell you how and when to appeal, including review by the Department of Insurance."
+  },
+  {
+    "id": "ca-ins-10169.3",
+    "statute_number": "California Insurance Code §10169.3",
+    "title": "Timelines for Independent Medical Review Decisions",
+    "text": "The independent medical review organization shall complete its review and render a decision within 30 days of receipt of the application and supporting documents. For cases involving an imminent and serious threat to the health of the insured, including severe pain or the potential loss of life, limb, or major bodily function, the review shall be expedited and a decision rendered within three days. Upon receipt of a decision favorable to the insured, the insurer shall promptly implement the decision and provide coverage for the service.",
+    "topics": ["independent medical review", "claim timeline", "expedited review", "appeal rights"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "An Independent Medical Review decision must be issued within 30 days, or within 3 days for urgent health threats, and the insurer must promptly cover the service if you win."
+  },
+  {
+    "id": "ca-ins-10123.147",
+    "statute_number": "California Insurance Code §10123.147",
+    "title": "Prompt Payment of Health Claims",
+    "text": "An insurer shall reimburse each complete claim, or portion thereof, whether in state or out of state, as soon as practical, but no later than 30 working days after receipt of the complete claim. If a claim or portion is not reimbursed within that period, interest shall accrue at the rate of 10 percent per annum beginning with the first calendar day after the 30-working-day period. An insurer may contest or deny a claim by notifying the provider or claimant in writing of the reasons within the same period.",
+    "topics": ["payment deadline", "claim timeline", "interest", "claim denial"],
+    "document_types": ["insurance_denial", "medical_bill"],
+    "jurisdiction": "California",
+    "summary": "Insurers must pay complete claims within 30 working days or pay 10% annual interest, and must explain in writing if they contest or deny a claim within that time."
+  },
+  {
+    "id": "fed-45cfr-147.136",
+    "statute_number": "45 C.F.R. §147.136 (ACA Internal and External Appeals)",
+    "title": "Federal ACA Right to Internal Appeal and External Review",
+    "text": "Under the Affordable Care Act, group health plans and health insurance issuers must provide an internal claims and appeals process and an external review process. Claimants must be notified of an adverse benefit determination and their right to appeal. For internal appeals, plans must allow at least 180 days to file. If the internal appeal upholds the denial, the claimant has the right to an independent external review by an entity not affiliated with the plan. For urgent care situations, expedited internal and external review must be available. The external reviewer's decision is binding on the plan.",
+    "topics": ["appeal rights", "external review", "ACA", "claim denial", "federal protections"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "Under the federal Affordable Care Act, you have at least 180 days to file an internal appeal of a denied claim and the right to a binding external review by an independent reviewer if the denial is upheld."
+  },
+  {
+    "id": "fed-29cfr-2560.503-1",
+    "statute_number": "29 C.F.R. §2560.503-1 (ERISA Claims Procedure)",
+    "title": "ERISA Appeal Rights for Employer Plan Denials",
+    "text": "For employee benefit plans governed by ERISA, a plan must establish reasonable claims procedures. A claimant must be notified of an adverse benefit determination, including the specific reasons, reference to the plan provisions on which it is based, and a description of the plan's appeal procedures and applicable time limits. The plan must allow at least 180 days following receipt of an adverse determination to appeal. For group health and disability claims, the plan must provide, free of charge, any new evidence or rationale and a reasonable opportunity to respond before issuing an adverse decision on appeal.",
+    "topics": ["appeal rights", "ERISA", "claim denial", "employer plan", "federal protections"],
+    "document_types": ["insurance_denial"],
+    "jurisdiction": "California",
+    "summary": "If your coverage is through an employer (ERISA) plan, a denial must explain the reasons and your appeal rights, and you have at least 180 days to appeal with access to the evidence used against you."
+  },
+  {
+    "id": "ca-ins-10123.13-secondreview",
+    "statute_number": "California Insurance Code §10123.13(b)",
+    "title": "Written Reasons and Provider Notice on Denial",
+    "text": "If a health insurer denies or contests a claim, or any portion of a claim, the insurer shall notify the claimant, the insured, and, if applicable, the provider in writing of the specific reason or reasons for the denial. The notice shall identify the portion of the claim that is being contested or denied and the specific information needed to resolve a contested claim. An insurer that fails to comply with these requirements may be subject to administrative penalties and the claim may be deemed an unfair claims settlement practice.",
+    "topics": ["required notice content", "claim denial", "fair claims practices", "appeal rights"],
+    "document_types": ["insurance_denial", "medical_bill"],
+    "jurisdiction": "California",
+    "summary": "When denying or contesting any part of a claim, the insurer must tell you in writing exactly which part is denied, why, and what information is needed to resolve it."
+  }
+]

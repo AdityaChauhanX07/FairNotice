@@ -1,0 +1,102 @@
+[
+  {
+    "id": "ca-wic-10950",
+    "statute_number": "California Welfare and Institutions Code §10950",
+    "title": "Right to a State Fair Hearing",
+    "text": "If any applicant for or recipient of public social services is dissatisfied with any action of the county welfare department relating to their application for or receipt of public social services, or if their claim is denied or not acted upon with reasonable promptness, the applicant or recipient has the right to a state fair hearing. The request for a hearing must generally be filed within 90 days of the order or action complained of. The hearing provides an opportunity to present evidence and challenge the county's action before an administrative law judge.",
+    "topics": ["fair hearing", "appeal rights", "benefits termination", "due process"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "If your public benefits (such as CalFresh or Medi-Cal) are denied, reduced, or terminated, you have the right to request a state fair hearing, generally within 90 days of the action."
+  },
+  {
+    "id": "ca-wic-10962",
+    "statute_number": "California Welfare and Institutions Code §10962",
+    "title": "Judicial Review of Fair Hearing Decisions",
+    "text": "An applicant or recipient, or the affected county, who is dissatisfied with a final decision of the California Department of Social Services after a state fair hearing may file a petition for a writ of administrative mandamus in superior court for judicial review of the decision. The petition must generally be filed within one year after receiving notice of the Department's final decision. No filing fee shall be required for the claimant, and the claimant may represent themselves.",
+    "topics": ["judicial review", "appeal rights", "fair hearing", "benefits termination"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "If you lose a fair hearing, you can ask a superior court to review the decision by filing a petition (with no filing fee) generally within one year."
+  },
+  {
+    "id": "fed-7cfr-273.13",
+    "statute_number": "7 C.F.R. §273.13 (CalFresh/SNAP Notice of Adverse Action)",
+    "title": "10-Day Advance Notice Before Reducing or Terminating CalFresh",
+    "text": "Before a state agency reduces or terminates a household's SNAP (CalFresh) benefits within the certification period, it must provide the household with a notice of adverse action at least 10 days before the action takes effect. The notice must explain the proposed action, the reason for it, the household's right to request a fair hearing, the right to continued benefits if a hearing is requested before the effective date, and the telephone number of the agency. Certain exceptions apply, such as where all household members have died or the household has moved out of state.",
+    "topics": ["required notice period", "benefits termination", "CalFresh", "SNAP", "adverse action notice"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "Before cutting or ending your CalFresh (food stamp) benefits, the agency must send you a written notice at least 10 days in advance explaining why and how to appeal."
+  },
+  {
+    "id": "fed-7cfr-273.15",
+    "statute_number": "7 C.F.R. §273.15 (CalFresh/SNAP Fair Hearings)",
+    "title": "Fair Hearing Rights for CalFresh Households",
+    "text": "A household has the right to request a fair hearing to appeal any action by the state agency or loss of benefits that occurred in the prior 90 days. The hearing shall be conducted by an impartial official who does not have a personal stake in the decision. The household has the right to examine the case file before the hearing, bring witnesses, present evidence, and be represented by legal counsel or another person. The state agency must reach its hearing decision within 60 days of the request.",
+    "topics": ["fair hearing", "appeal rights", "CalFresh", "SNAP", "due process"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "CalFresh recipients can request a fair hearing within 90 days, review their case file, present evidence and witnesses, and must receive a decision within 60 days."
+  },
+  {
+    "id": "ca-mpp-22-072",
+    "statute_number": "California Manual of Policies and Procedures (MPP) §22-072 (Aid Paid Pending)",
+    "title": "Continuation of Benefits During an Appeal (Aid Paid Pending)",
+    "text": "If a recipient requests a state hearing before the effective date of a county action to reduce, terminate, or discontinue benefits, aid shall be continued or reinstated in the prior amount pending the hearing decision, unless the recipient specifically waives continued aid. To receive aid paid pending, the hearing request must generally be filed before the effective date stated in the notice of action, or within 10 days of the notice's mailing or delivery. If the hearing decision is adverse to the recipient, the county may seek to recover the aid paid pending.",
+    "topics": ["aid paid pending", "continuation of benefits", "fair hearing", "benefits termination", "appeal rights"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "If you request a hearing before your benefits' termination date (usually within 10 days of the notice), your benefits continue at the same level until the hearing is decided."
+  },
+  {
+    "id": "fed-42cfr-431.211",
+    "statute_number": "42 C.F.R. §431.211 (Medi-Cal Advance Notice)",
+    "title": "10-Day Advance Notice Before Medi-Cal Termination",
+    "text": "A state Medicaid (Medi-Cal) agency must mail a notice of intended action to terminate, suspend, or reduce a beneficiary's eligibility or covered services at least 10 days before the date the action would become effective. The notice must state the intended action, the reasons for it, the specific regulations supporting the action, an explanation of the individual's right to request a hearing, and the circumstances under which benefits are continued if a hearing is requested. Shorter notice is permitted only in limited circumstances such as confirmed factual information establishing ineligibility.",
+    "topics": ["required notice period", "Medi-Cal", "benefits termination", "due process", "adverse action notice"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "Before terminating or reducing your Medi-Cal, the agency must mail you a written notice at least 10 days in advance stating the reasons, the supporting rules, and your hearing rights."
+  },
+  {
+    "id": "fed-42cfr-431.230",
+    "statute_number": "42 C.F.R. §431.230 (Medi-Cal Continuation Pending Hearing)",
+    "title": "Continuation of Medi-Cal Benefits Pending a Hearing",
+    "text": "If a Medicaid (Medi-Cal) beneficiary requests a fair hearing before the effective date of an intended action to terminate, suspend, or reduce benefits, the agency may not terminate or reduce services until a hearing decision is rendered, unless it is determined at the hearing that the sole issue is one of federal or state law or policy. Benefits must be reinstated and continued if the beneficiary requested the hearing within the advance-notice period. If the agency's action is upheld, the agency may institute recovery procedures.",
+    "topics": ["continuation of benefits", "Medi-Cal", "fair hearing", "benefits termination", "appeal rights"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "If you request a Medi-Cal hearing before the termination date in your notice, your coverage must continue unchanged until the hearing is decided."
+  },
+  {
+    "id": "fed-goldberg-v-kelly",
+    "statute_number": "Goldberg v. Kelly, 397 U.S. 254 (1970)",
+    "title": "Constitutional Due Process Before Termination of Welfare Benefits",
+    "text": "The United States Supreme Court held that welfare benefits are a statutory entitlement for persons qualified to receive them, and that the Due Process Clause of the Fourteenth Amendment requires an evidentiary hearing before such benefits may be terminated. Recipients are entitled to timely and adequate notice detailing the reasons for a proposed termination, an effective opportunity to confront adverse witnesses and present their own arguments and evidence orally, and a decision by an impartial decision-maker based on the evidence. This decision is the constitutional foundation for pre-termination notice and hearing rights in public benefits.",
+    "topics": ["due process", "fair hearing", "benefits termination", "constitutional rights", "appeal rights"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "The Supreme Court ruled that the government must give you adequate written notice and an opportunity for a hearing before terminating welfare benefits you are entitled to."
+  },
+  {
+    "id": "ca-wic-11022",
+    "statute_number": "California Welfare and Institutions Code §11022",
+    "title": "Notice and Hearing for CalWORKs Discontinuance",
+    "text": "Aid granted under the CalWORKs program shall not be discontinued, withheld, or reduced until the recipient has been given notice and an opportunity for a fair hearing in accordance with the regulations of the Department of Social Services. The county must provide adequate written notice of the action and the reasons for it. Consistent with the aid-paid-pending rules, a timely hearing request preserves benefits at the prior level until a decision is reached. The recipient may be represented and may present evidence at the hearing.",
+    "topics": ["required notice period", "CalWORKs", "benefits termination", "fair hearing", "due process"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "CalWORKs cash aid cannot be cut or stopped until you have received proper written notice and an opportunity for a fair hearing."
+  },
+  {
+    "id": "fed-7cfr-273.13-adequate",
+    "statute_number": "7 C.F.R. §273.13(a)(2) (Contents of SNAP Adverse Notice)",
+    "title": "Required Content of a CalFresh Termination Notice",
+    "text": "A notice of adverse action for SNAP (CalFresh) is considered adequate only if it explains in easily understandable language the proposed action; the reason for the proposed action; the household's right to request a fair hearing; the telephone number of the SNAP office and the name of a person to contact for additional information; the availability of continued benefits; and the liability of the household for any overissuances received while awaiting a fair hearing if the hearing decision is adverse. A notice that omits these elements may be legally defective.",
+    "topics": ["required notice content", "CalFresh", "SNAP", "benefits termination", "adverse action notice"],
+    "document_types": ["benefits_termination"],
+    "jurisdiction": "California",
+    "summary": "A CalFresh termination notice must clearly state the action, the reason, your hearing rights, a contact number, and whether benefits continue during an appeal — or it may be invalid."
+  }
+]
