@@ -166,3 +166,95 @@ export interface AnalysisData {
 export type AnalysisResult =
   | { success: true; data: AnalysisData }
   | { success: false; error: string };
+
+/* ------------------------------------------------------------------ */
+/* Explanation schema                                                 */
+/* ------------------------------------------------------------------ */
+
+export interface ExplanationSection {
+  heading: string;
+  content: string;
+  statute_references: string[];
+}
+
+export interface KeyTerm {
+  term: string;
+  definition: string;
+}
+
+/** Plain-language, optionally-translated explanation of the document. */
+export interface DocumentExplanation {
+  document_summary: string;
+  sections: ExplanationSection[];
+  key_terms: KeyTerm[];
+  what_this_means_for_you: string;
+  emotional_reassurance: string;
+}
+
+/* ------------------------------------------------------------------ */
+/* Action plan schema                                                 */
+/* ------------------------------------------------------------------ */
+
+export type Likelihood = "high" | "medium" | "low" | "unknown";
+
+export type ResourceType =
+  | "legal_aid"
+  | "hotline"
+  | "government"
+  | "nonprofit";
+
+export interface TimelineEntry {
+  date: string | null;
+  days_remaining: number | null;
+  urgency: UrgencyLevel;
+  action: string;
+  detail: string;
+  statute_basis: string | null;
+}
+
+export interface UserOption {
+  id: number;
+  title: string;
+  description: string;
+  likelihood_of_success: Likelihood;
+  statute_basis: string | null;
+  recommended: boolean;
+}
+
+export interface ResponseLetter {
+  to: string;
+  from: string;
+  date: string;
+  subject: string;
+  body: string;
+  closing: string;
+}
+
+export interface Resource {
+  name: string;
+  description: string;
+  type: ResourceType;
+  contact: string;
+  jurisdiction_specific: boolean;
+}
+
+/** Concrete, statute-grounded plan of action for the user. */
+export interface ActionPlan {
+  timeline: TimelineEntry[];
+  options: UserOption[];
+  response_letter: ResponseLetter;
+  resources: Resource[];
+}
+
+/** Successful payload from `POST /api/explain`. */
+export interface ExplainData {
+  explanation: DocumentExplanation;
+  actionPlan: ActionPlan;
+  model: string;
+  processingTime: number;
+}
+
+/** Response from `POST /api/explain`. */
+export type ExplainResult =
+  | { success: true; data: ExplainData }
+  | { success: false; error: string };
