@@ -106,3 +106,63 @@ export interface ExtractionData {
 export type ExtractionResult =
   | { success: true; data: ExtractionData }
   | { success: false; error: string };
+
+/* ------------------------------------------------------------------ */
+/* Analysis schema                                                    */
+/* ------------------------------------------------------------------ */
+
+export type LegalStatus =
+  | "valid"
+  | "potentially_invalid"
+  | "requires_review"
+  | "standard_procedure";
+
+export interface ClaimAnalysisStatute {
+  statute_id: string;
+  statute_number: string;
+  relevance: string;
+  supports_claim: boolean;
+}
+
+export interface ClaimAnalysis {
+  claim_id: number;
+  original_claim: string;
+  analysis: string;
+  legal_status: LegalStatus;
+  relevant_statutes: ClaimAnalysisStatute[];
+  user_action: string;
+}
+
+export interface DeadlineAnalysis {
+  deadline: string;
+  action_required: string;
+  is_legally_compliant: boolean | null;
+  statute_basis: string | null;
+  recommendation: string;
+}
+
+/** Full statute-grounded analysis produced by the LLM. */
+export interface DocumentAnalysis {
+  overall_assessment: string;
+  urgency: UrgencyLevel;
+  claim_analysis: ClaimAnalysis[];
+  deadline_analysis: DeadlineAnalysis[];
+  rights_summary: string[];
+  red_flags: string[];
+  referral_needed: boolean;
+  referral_reason: string | null;
+}
+
+/** Successful payload from `POST /api/analyze`. */
+export interface AnalysisData {
+  analysis: DocumentAnalysis;
+  statutesSearched: number;
+  statutesMatched: number;
+  model: string;
+  processingTime: number;
+}
+
+/** Response from `POST /api/analyze`. */
+export type AnalysisResult =
+  | { success: true; data: AnalysisData }
+  | { success: false; error: string };
