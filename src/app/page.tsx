@@ -181,7 +181,13 @@ export default function LandingPage() {
       {/* ---------------------------------------------------------- */}
       {/* HERO                                                       */}
       {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-4xl px-5 pb-20 pt-20 text-center sm:px-8 sm:pb-28 sm:pt-28">
+      <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-5 py-20 text-center sm:px-8">
+        {/* Radial amber glow behind the headline for depth */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[760px] max-w-[120vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.12] blur-[130px]"
+        />
+        <div className="mx-auto w-full max-w-4xl">
         <motion.h1
           variants={fadeUp}
           initial="hidden"
@@ -214,7 +220,7 @@ export default function LandingPage() {
         >
           <Link
             href="/upload"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-background shadow-lg shadow-accent/20 transition-all hover:bg-accent-hover hover:shadow-accent/30"
+            className="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-background shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent-hover hover:shadow-accent/40 hover:brightness-105 active:scale-100"
           >
             Upload Your Document
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
@@ -223,6 +229,7 @@ export default function LandingPage() {
             Free. Open source. No data stored.
           </p>
         </motion.div>
+        </div>
       </section>
 
       {/* ---------------------------------------------------------- */}
@@ -259,7 +266,7 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           {steps.map((step, i) => (
-            <FadeUp key={step.title} delay={i * 0.12}>
+            <FadeUp key={step.title} delay={i * 0.12} className="h-full">
               <div className="relative h-full">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-surface text-accent">
                   <step.icon className="h-6 w-6" />
@@ -292,7 +299,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {documents.map((doc, i) => (
-              <FadeUp key={doc.title} delay={i * 0.12}>
+              <FadeUp key={doc.title} delay={i * 0.12} className="h-full">
                 <div className="group h-full rounded-2xl border border-border bg-surface p-7 transition-colors hover:border-accent/40 hover:bg-surface-hover">
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <doc.icon className="h-6 w-6" />

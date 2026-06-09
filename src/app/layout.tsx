@@ -12,9 +12,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "[Project Name] — Understand the documents that change your life",
+  title: "[Project Name] — AI-Powered Document Advocate",
   description:
-    "Upload a legal or bureaucratic document and get a plain-language explanation, statute-backed analysis, and a draft response — in seconds.",
+    "Upload the legal document you received. Get a plain-language explanation, statute-backed analysis, and a draft response — in seconds.",
 };
 
 export default function RootLayout({

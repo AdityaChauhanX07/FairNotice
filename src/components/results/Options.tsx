@@ -59,7 +59,7 @@ export function Options({ options }: OptionsProps) {
                   {likelihood.label} likelihood
                 </Pill>
                 {option.statute_basis ? (
-                  <span className="text-xs text-muted/80">
+                  <span className="text-xs font-medium text-accent/90">
                     {option.statute_basis}
                   </span>
                 ) : null}

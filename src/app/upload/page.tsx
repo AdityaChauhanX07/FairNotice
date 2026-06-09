@@ -443,9 +443,9 @@ export default function UploadPage() {
           {!file ? (
             <div
               {...getRootProps()}
-              className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-colors ${
+              className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-all duration-200 ${
                 isDragActive
-                  ? "border-accent bg-accent/5"
+                  ? "scale-[1.01] border-accent bg-accent/10 shadow-lg shadow-accent/10"
                   : "border-border bg-surface/40 hover:border-accent/50 hover:bg-surface-hover"
               }`}
             >
@@ -520,10 +520,13 @@ export default function UploadPage() {
           </div>
         </div>
 
+        {/* Divider between the upload area and the configuration options */}
+        <div className="mt-8 border-t border-border/60" />
+
         {/* ------------------------------------------------------ */}
         {/* CONFIGURATION                                          */}
         {/* ------------------------------------------------------ */}
-        <div className="mt-10 space-y-8">
+        <div className="mt-8 space-y-8">
           {/* Document type */}
           <div>
             <label className="mb-3 block text-sm font-semibold text-foreground">
@@ -538,7 +541,7 @@ export default function UploadPage() {
                     type="button"
                     onClick={() => setDocType(type.id)}
                     aria-pressed={selected}
-                    className={`flex flex-col items-center gap-2 rounded-xl border p-4 text-center transition-colors ${
+                    className={`flex h-full flex-col items-center justify-center gap-2 rounded-xl border p-4 text-center transition-colors ${
                       selected
                         ? "border-accent bg-accent/10"
                         : "border-border bg-surface/40 hover:border-accent/40 hover:bg-surface-hover"
