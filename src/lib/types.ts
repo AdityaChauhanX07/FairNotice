@@ -258,3 +258,27 @@ export interface ExplainData {
 export type ExplainResult =
   | { success: true; data: ExplainData }
   | { success: false; error: string };
+
+/* ------------------------------------------------------------------ */
+/* Confidence & safety                                                */
+/* ------------------------------------------------------------------ */
+
+export type ConfidenceLevel = "high" | "medium" | "low";
+
+export type ConfidenceFactorStatus = "positive" | "warning" | "negative";
+
+/** A single signal that contributed to (or reassured) the confidence score. */
+export interface ConfidenceFactor {
+  factor: string;
+  status: ConfidenceFactorStatus;
+  detail: string;
+}
+
+/** How much to trust this analysis, and why. Rendered by the ConfidenceBanner. */
+export interface ConfidenceReport {
+  overall: ConfidenceLevel;
+  /** 0-100, clamped. */
+  overallScore: number;
+  factors: ConfidenceFactor[];
+  disclaimers: string[];
+}

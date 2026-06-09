@@ -248,11 +248,14 @@ const mockAnalysis: DocumentAnalysis = {
     "Only a sheriff, acting on a court order, can remove you — your landlord cannot lock you out, shut off utilities, or remove your belongings (California Code of Civil Procedure §1174).",
     "If you are sued, you have the right to file a response and have your day in court before any eviction (California Code of Civil Procedure §1167).",
   ],
+  // Three red flags keeps the demo scenario at "medium" confidence: a fourth
+  // would trip the ">3 red flags" deduction in calculateConfidence and push the
+  // score into "low". The attorney's-fees concern is folded into claim 5's
+  // analysis instead.
   red_flags: [
     "The notice demands $150 in late fees and a $35 returned-check charge on top of rent — a 3-day pay-or-quit notice may only demand rent, so this overstatement can make the entire notice defective.",
     "The 3-day deadline (June 1 → June 4) appears to count a Saturday and Sunday, but those days must be excluded — suggesting the deadline was miscounted.",
     "A curable lease violation (the pet) is bundled into a pay-or-quit notice instead of being handled with a separate notice to cure, which is procedurally improper.",
-    "The notice threatens to recover attorney's fees, which is only possible if your lease specifically contains an attorney's-fee clause.",
   ],
   referral_needed: true,
   referral_reason:

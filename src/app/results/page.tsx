@@ -7,8 +7,10 @@ import {
   RESULTS_STORAGE_KEY,
   type ResultsPayload,
 } from "@/lib/mock-data";
+import { calculateConfidence } from "@/lib/confidence";
 import { TopBar } from "@/components/results/TopBar";
 import { AlertBanner } from "@/components/results/AlertBanner";
+import { ConfidenceBanner } from "@/components/results/ConfidenceBanner";
 import { SummaryCard } from "@/components/results/SummaryCard";
 import { DeadlineTimeline } from "@/components/results/DeadlineTimeline";
 import { ClaimAnalysis } from "@/components/results/ClaimAnalysis";
@@ -57,6 +59,12 @@ export default function ResultsPage() {
 
   const { extraction, analysis, explanation, actionPlan, meta } = results;
 
+  const confidence = calculateConfidence(
+    analysis,
+    extraction,
+    extraction.jurisdiction.state ?? ""
+  );
+
   return (
     <div className="bg-glow-amber min-h-screen px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto flex w-full max-w-5xl gap-10">
@@ -76,6 +84,8 @@ export default function ResultsPage() {
             assessment={analysis.overall_assessment}
             referralNeeded={analysis.referral_needed}
           />
+
+          <ConfidenceBanner report={confidence} />
 
           <SummaryCard extraction={extraction} explanation={explanation} />
 
