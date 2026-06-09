@@ -110,62 +110,197 @@ function isImageFile(file: File): boolean {
 /* Processing overlay                                                 */
 /* ------------------------------------------------------------------ */
 
-function StageIcon({ status }: { status: PipelineStage["status"] }) {
-  switch (status) {
-    case "active":
-      return <Loader2 className="h-5 w-5 shrink-0 animate-spin text-accent" />;
-    case "complete":
-      return <CheckCircle className="h-5 w-5 shrink-0 text-emerald-500" />;
-    case "error":
-      return <XCircle className="h-5 w-5 shrink-0 text-red-500" />;
-    default:
-      return <Circle className="h-5 w-5 shrink-0 text-muted" />;
-  }
+/** Static label + subtitle for each pipeline step, shown in the overlay. */
+const STAGE_META: Record<number, { label: string; subtitle: string }> = {
+  1: {
+    label: "Reading your document...",
+    subtitle: "Extracting text from your document",
+  },
+  2: {
+    label: "Extracting key information...",
+    subtitle: "Identifying claims, deadlines, and demands",
+  },
+  3: {
+    label: "Checking against real statutes...",
+    subtitle: "Searching California legal database",
+  },
+  4: {
+    label: "Generating your action plan...",
+    subtitle: "Building your explanation and response letter",
+  },
+};
+
+/** A short, friendly noun for the uploaded file's type (used in step 1). */
+function fileTypeLabel(file: File | null): string {
+  if (!file) return "document";
+  const name = file.name.toLowerCase();
+  if (file.type === "application/pdf" || name.endsWith(".pdf")) return "PDF";
+  if (file.type.startsWith("image/")) return "image";
+  if (file.type === "text/plain" || name.endsWith(".txt")) return "text file";
+  return "document";
 }
 
-function ProcessingOverlay({ stages }: { stages: PipelineStage[] }) {
+/** Subtle pulsing dot shown next to the currently-active step. */
+function PulsingDot() {
+  return (
+    <motion.span
+      aria-hidden
+      className="h-2 w-2 shrink-0 rounded-full bg-accent"
+      animate={{ scale: [1, 1.45, 1], opacity: [1, 0.4, 1] }}
+      transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+    />
+  );
+}
+
+function StatusIcon({ status }: { status: PipelineStage["status"] }) {
+  if (status === "complete") {
+    return (
+      <motion.span
+        initial={{ scale: 0.4, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 420, damping: 16 }}
+        className="inline-flex"
+      >
+        <CheckCircle className="h-5 w-5 text-emerald-500" />
+      </motion.span>
+    );
+  }
+  if (status === "active") {
+    return <Loader2 className="h-5 w-5 animate-spin text-accent" />;
+  }
+  if (status === "error") {
+    return <XCircle className="h-5 w-5 text-red-500" />;
+  }
+  return <Circle className="h-4 w-4 text-muted/40" />;
+}
+
+function StageCard({
+  stage,
+  subtitle,
+}: {
+  stage: PipelineStage;
+  subtitle: string;
+}) {
+  const { status } = stage;
+  const meta = STAGE_META[stage.step];
+  const active = status === "active";
+  const complete = status === "complete";
+  const error = status === "error";
+
+  const cardTint = active
+    ? "border-accent/40 bg-accent/5"
+    : error
+      ? "border-red-500/30 bg-red-500/5"
+      : "border-border bg-surface/40";
+
+  const numberTint = complete
+    ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
+    : active
+      ? "border-accent/50 bg-accent/10 text-accent"
+      : error
+        ? "border-red-500/40 bg-red-500/10 text-red-400"
+        : "border-border bg-surface text-muted";
+
+  // Bottom line: completion time, a failure note, or the step subtitle.
+  const detailLine =
+    complete && stage.time != null
+      ? `Done in ${(stage.time / 1000).toFixed(1)}s`
+      : error
+        ? "Couldn't complete this step"
+        : subtitle;
+
+  return (
+    <li
+      className={`flex items-center gap-3 rounded-xl border p-3 transition-colors ${cardTint}`}
+    >
+      <div
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-semibold ${numberTint}`}
+      >
+        {stage.step}
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <p
+            className={`truncate text-sm font-semibold ${
+              active || complete || error ? "text-foreground" : "text-muted"
+            }`}
+          >
+            {meta.label}
+          </p>
+          {active ? <PulsingDot /> : null}
+        </div>
+        <p
+          className={`mt-0.5 text-xs ${
+            complete
+              ? "text-emerald-400/80"
+              : error
+                ? "text-red-400/90"
+                : "text-muted"
+          }`}
+        >
+          {detailLine}
+        </p>
+      </div>
+
+      <div className="flex h-5 w-5 shrink-0 items-center justify-center">
+        <StatusIcon status={status} />
+      </div>
+    </li>
+  );
+}
+
+function ProcessingOverlay({
+  stages,
+  fileType,
+}: {
+  stages: PipelineStage[];
+  fileType: string;
+}) {
+  const completed = stages.filter((s) => s.status === "complete").length;
+  const progress = completed * 25; // 25% per step
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 px-5 backdrop-blur-sm">
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="w-full max-w-md rounded-2xl border border-border bg-surface p-7 shadow-2xl"
+        className="w-full max-w-md rounded-2xl border border-border bg-surface p-6 shadow-2xl sm:p-7"
       >
         <h2 className="text-lg font-semibold text-foreground">
           Analyzing your document
         </h2>
 
-        <ul className="mt-6 space-y-4">
-          {stages.map((stage) => {
-            const muted =
-              stage.status === "pending" || stage.status === "complete";
-            return (
-              <li key={stage.step} className="flex items-start gap-3">
-                <StageIcon status={stage.status} />
-                <div className="min-w-0 flex-1">
-                  <p
-                    className={`text-sm font-medium ${
-                      stage.status === "error"
-                        ? "text-red-500"
-                        : muted && stage.status === "pending"
-                          ? "text-muted"
-                          : "text-foreground"
-                    }`}
-                  >
-                    {stage.label}
-                  </p>
-                  {stage.detail ? (
-                    <p className="mt-0.5 text-xs text-muted">{stage.detail}</p>
-                  ) : null}
-                </div>
-              </li>
-            );
-          })}
+        {/* Top-level progress bar — fills 25% per completed step. */}
+        <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-surface-hover">
+          <motion.div
+            className="h-full rounded-full bg-accent"
+            initial={false}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
+        </div>
+
+        <ul className="mt-5 space-y-2.5">
+          {stages.map((stage) => (
+            <StageCard
+              key={stage.step}
+              stage={stage}
+              subtitle={
+                stage.step === 1
+                  ? `Extracting text from your ${fileType}`
+                  : STAGE_META[stage.step].subtitle
+              }
+            />
+          ))}
         </ul>
 
-        <p className="mt-7 text-center text-xs text-muted">
+        <p className="mt-6 text-center text-xs text-muted">
           This usually takes 30-90 seconds depending on document complexity
+        </p>
+        <p className="mt-1.5 text-center text-xs font-medium text-accent/80">
+          Every claim cited. Every right defended.
         </p>
       </motion.div>
     </div>
@@ -263,8 +398,9 @@ export default function UploadPage() {
         error instanceof Error
           ? error.message
           : "Something went wrong while analyzing your document.";
-      toast.error(message);
-      setIsProcessing(false);
+      // Leave the overlay up (showing the failed step) while we route to the
+      // dedicated error page, which offers retry / go-home actions.
+      router.push(`/error?message=${encodeURIComponent(message)}`);
     }
   };
 
@@ -514,7 +650,12 @@ export default function UploadPage() {
         </div>
       </motion.div>
 
-      {isProcessing ? <ProcessingOverlay stages={pipelineStages} /> : null}
+      {isProcessing ? (
+        <ProcessingOverlay
+          stages={pipelineStages}
+          fileType={fileTypeLabel(file)}
+        />
+      ) : null}
     </div>
   );
 }

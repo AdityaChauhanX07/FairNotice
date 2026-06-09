@@ -19,6 +19,8 @@ export interface PipelineStage {
   label: string;
   status: "active" | "complete" | "pending" | "error";
   detail?: string;
+  /** Wall-clock duration of the step in milliseconds, set on completion. */
+  time?: number;
 }
 
 /** Human-facing label for each pipeline step, keyed by step number. */
@@ -97,8 +99,10 @@ export async function runAnalysisPipeline({
   const emit = (
     step: number,
     status: PipelineStage["status"],
-    detail?: string
-  ) => onProgress({ step, label: PIPELINE_STAGE_LABELS[step], status, detail });
+    detail?: string,
+    time?: number
+  ) =>
+    onProgress({ step, label: PIPELINE_STAGE_LABELS[step], status, detail, time });
 
   /** Fetch a step, enforce the `{ success, data }` contract, and emit status. */
   async function callStep<T>(
@@ -107,6 +111,7 @@ export async function runAnalysisPipeline({
     init: RequestInit
   ): Promise<T> {
     emit(step, "active");
+    const startedAt = Date.now();
 
     let response: Response;
     try {
@@ -136,7 +141,8 @@ export async function runAnalysisPipeline({
       );
     }
 
-    emit(step, "complete");
+    // Report the step's wall-clock time so the UI can show "Done in N.Ns".
+    emit(step, "complete", undefined, Date.now() - startedAt);
     return json.data;
   }
 
