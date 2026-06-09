@@ -59,6 +59,25 @@ const DOC_TYPE_API_MAP: Record<string, string> = {
   other: "other",
 };
 
+/** Demo documents served from `public/samples/`, with the docType to preselect. */
+const SAMPLE_DOCS: { label: string; fileName: string; docType: string }[] = [
+  {
+    label: "Eviction Notice",
+    fileName: "eviction-notice-ca.txt",
+    docType: "eviction",
+  },
+  {
+    label: "Insurance Denial",
+    fileName: "insurance-denial-ca.txt",
+    docType: "insurance",
+  },
+  {
+    label: "Benefits Letter",
+    fileName: "benefits-termination-ca.txt",
+    docType: "benefits",
+  },
+];
+
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
   "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
@@ -167,6 +186,7 @@ export default function UploadPage() {
   const [pipelineStages, setPipelineStages] = useState<PipelineStage[]>(
     INITIAL_PIPELINE_STAGES
   );
+  const [loadingSample, setLoadingSample] = useState<string | null>(null);
 
   const onDrop = useCallback((accepted: File[]) => {
     if (accepted.length > 0) {
@@ -194,6 +214,29 @@ export default function UploadPage() {
   });
 
   const canSubmit = file !== null && docType !== null;
+
+  const loadSample = async (sample: (typeof SAMPLE_DOCS)[number]) => {
+    if (isProcessing || loadingSample !== null) return;
+
+    setLoadingSample(sample.fileName);
+    try {
+      const response = await fetch(`/samples/${sample.fileName}`);
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+      const text = await response.text();
+      const sampleFile = new File([text], sample.fileName, {
+        type: "text/plain",
+      });
+      setFile(sampleFile);
+      setDocType(sample.docType);
+      toast.success("Sample document loaded");
+    } catch {
+      toast.error("Could not load the sample document. Please try again.");
+    } finally {
+      setLoadingSample(null);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!file || !docType || isProcessing) return;
@@ -310,6 +353,33 @@ export default function UploadPage() {
               </button>
             </div>
           )}
+        </div>
+
+        {/* ------------------------------------------------------ */}
+        {/* TRY A SAMPLE                                           */}
+        {/* ------------------------------------------------------ */}
+        <div className="mt-4">
+          <p className="text-xs font-medium text-muted">
+            No document? Try a sample:
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {SAMPLE_DOCS.map((sample) => (
+              <button
+                key={sample.fileName}
+                type="button"
+                onClick={() => loadSample(sample)}
+                disabled={loadingSample !== null || isProcessing}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface/40 px-3 py-1.5 text-xs font-medium text-muted transition-colors hover:border-accent/40 hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loadingSample === sample.fileName ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <FileText className="h-3.5 w-3.5" />
+                )}
+                {sample.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* ------------------------------------------------------ */}
