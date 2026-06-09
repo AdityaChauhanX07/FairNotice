@@ -165,7 +165,7 @@ function ProcessingOverlay({ stages }: { stages: PipelineStage[] }) {
         </ul>
 
         <p className="mt-7 text-center text-xs text-muted">
-          This usually takes 15-30 seconds
+          This usually takes 30-90 seconds depending on document complexity
         </p>
       </motion.div>
     </div>
