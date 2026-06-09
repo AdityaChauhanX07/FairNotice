@@ -1,10 +1,10 @@
-# [Project Name]
+# FairNotice
 
 ### Upload the document you don't understand. Get back the rights you didn't know you had.
 
-[![Built for STEMINATE Hacks 2026](https://img.shields.io/badge/Built_for-STEMINATE_Hacks_2026-f59e0b?style=for-the-badge)](https://github.com/)
+[![Built for STEMINATE Hacks 2026](https://img.shields.io/badge/Built_for-STEMINATE_Hacks_2026-f59e0b?style=for-the-badge)](https://github.com/AdityaChauhanX07/steminate)
 [![AI Powered](https://img.shields.io/badge/AI-Powered-8b5cf6?style=for-the-badge)](https://groq.com/)
-[![Open Source](https://img.shields.io/badge/Open-Source-22c55e?style=for-the-badge)](https://github.com/)
+[![Open Source](https://img.shields.io/badge/Open-Source-22c55e?style=for-the-badge)](https://github.com/AdityaChauhanX07/steminate)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3b82f6?style=for-the-badge)](#license)
 
 ---
@@ -19,7 +19,7 @@ The system isn't broken — it's working exactly as designed, against the people
 
 ## The Solution
 
-**[Project Name]** turns an intimidating legal or bureaucratic document into a plain-language explanation, a statute-grounded analysis of every claim made against you, and a ready-to-send draft response — in seconds, for free.
+**FairNotice** turns an intimidating legal or bureaucratic document into a plain-language explanation, a statute-grounded analysis of every claim made against you, and a ready-to-send draft response — in seconds, for free.
 
 Capabilities:
 
@@ -37,7 +37,7 @@ Capabilities:
 
 ### Document-Grounded, Not Knowledge-Dependent
 
-Most legal chatbots answer from the model's training data — a black box of half-remembered, jurisdiction-blind, possibly-outdated "knowledge." [Project Name] inverts this. The model is never asked what it *knows*; it is asked to reason over exactly two inputs: the text of *your* document and a set of statutes retrieved from a curated database. The document is the ground truth for the facts, and the statute store is the ground truth for the law. This makes the system auditable: every conclusion can be traced back to a specific sentence in your document and a specific section of code.
+Most legal chatbots answer from the model's training data — a black box of half-remembered, jurisdiction-blind, possibly-outdated "knowledge." FairNotice inverts this. The model is never asked what it *knows*; it is asked to reason over exactly two inputs: the text of *your* document and a set of statutes retrieved from a curated database. The document is the ground truth for the facts, and the statute store is the ground truth for the law. This makes the system auditable: every conclusion can be traced back to a specific sentence in your document and a specific section of code.
 
 ### Cited or Silent
 
@@ -45,7 +45,7 @@ A claim about your legal rights with no citation is just a guess wearing a suit.
 
 ### Refusal as a Feature
 
-The most dangerous thing a legal tool can do is sound certain about a life-altering matter it doesn't understand. [Project Name] treats refusal as a first-class outcome, not a failure. When confidence is low, the interface says so prominently and routes the user toward real legal aid. High-stakes matters that fall outside the tool's scope — criminal charges, child custody, immigration detention — are designed to trigger a hard stop and a referral, never an answer. A tool that knows what it doesn't know is safer than one that always has something to say.
+The most dangerous thing a legal tool can do is sound certain about a life-altering matter it doesn't understand. FairNotice treats refusal as a first-class outcome, not a failure. When confidence is low, the interface says so prominently and routes the user toward real legal aid. High-stakes matters that fall outside the tool's scope — criminal charges, child custody, immigration detention — are designed to trigger a hard stop and a referral, never an answer. A tool that knows what it doesn't know is safer than one that always has something to say.
 
 ---
 
@@ -149,8 +149,8 @@ Each finding is tied to a specific statute, assigned a status (for example, *pot
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-org/your-repo.git
-cd your-repo
+git clone https://github.com/AdityaChauhanX07/steminate.git
+cd steminate
 
 # 2. Install dependencies
 npm install
@@ -308,7 +308,7 @@ Beyond scoring, the safety architecture treats certain matters as **hard refusal
 
 ## Ethical Considerations
 
-- **Legal information, not legal advice.** [Project Name] explains documents and surfaces relevant law. It is not a lawyer and does not establish an attorney–client relationship. Every output reinforces this.
+- **Legal information, not legal advice.** FairNotice explains documents and surfaces relevant law. It is not a lawyer and does not establish an attorney–client relationship. Every output reinforces this.
 - **Data privacy.** Documents are processed entirely in memory and are never written to disk or stored in a database. When the request ends, the document is gone.
 - **Transparency.** Every system prompt that shapes the model's behavior lives in the repository under `src/lib/prompts/`. There are no hidden instructions — anyone can audit exactly what the model is told.
 - **Refusal architecture.** The system is built to decline rather than guess. Low confidence and out-of-scope matters route to human help by design.

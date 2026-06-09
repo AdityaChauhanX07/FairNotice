@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "[Project Name] — AI-Powered Document Advocate",
+  title: "FairNotice — AI-Powered Document Advocate",
   description:
     "Upload the legal document you received. Get a plain-language explanation, statute-backed analysis, and a draft response — in seconds.",
 };

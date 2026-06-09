@@ -27,7 +27,7 @@ export default function Navbar() {
           href="/"
           className="text-base font-semibold tracking-tight text-foreground"
         >
-          [Project Name]
+          FairNotice
         </Link>
 
         <Link
