@@ -398,9 +398,11 @@ export default function UploadPage() {
         error instanceof Error
           ? error.message
           : "Something went wrong while analyzing your document.";
-      // Leave the overlay up (showing the failed step) while we route to the
-      // dedicated error page, which offers retry / go-home actions.
-      router.push(`/error?message=${encodeURIComponent(message)}`);
+      // Dismiss the overlay and surface the failure inline. Form state (file,
+      // docType, jurisdiction, language) is preserved so the user can retry
+      // immediately without re-entering anything.
+      setIsProcessing(false);
+      toast.error(message);
     }
   };
 
