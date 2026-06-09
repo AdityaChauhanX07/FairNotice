@@ -67,8 +67,22 @@ export interface DocumentExtraction {
   legal_references: ExtractionLegalReference[];
   key_demands: string[];
   urgency_level: UrgencyLevel;
+  /**
+   * High-stakes categories that require professional legal help. When
+   * non-empty, the pipeline short-circuits detailed analysis and routes the
+   * user straight to referral resources. May be absent on older payloads.
+   */
+  safety_flags?: SafetyFlag[];
   raw_text_length: number;
 }
+
+/** Categories that trigger a hard refusal + professional-help routing. */
+export type SafetyFlag =
+  | "criminal_charges"
+  | "child_custody"
+  | "restraining_order"
+  | "immigration"
+  | "imminent_danger";
 
 /* ------------------------------------------------------------------ */
 /* API response shapes                                                */

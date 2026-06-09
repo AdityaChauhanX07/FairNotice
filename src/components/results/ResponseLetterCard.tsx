@@ -26,6 +26,9 @@ export interface ResponseLetterCardProps {
 export function ResponseLetterCard({ letter }: ResponseLetterCardProps) {
   const [copied, setCopied] = useState(false);
 
+  // No letter is generated for safety-routed (referral-only) results.
+  if (!letter.body || !letter.body.trim()) return null;
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(letterToText(letter));

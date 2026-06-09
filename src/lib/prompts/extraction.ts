@@ -29,6 +29,7 @@ Return a JSON object with EXACTLY this shape:
   "legal_references": [ { "reference": string, "context": string } ],
   "key_demands": [ string ],
   "urgency_level": "critical" | "high" | "medium" | "low",
+  "safety_flags": [ string ],
   "raw_text_length": number
 }
 
@@ -53,6 +54,13 @@ FIELD GUIDANCE:
 - "legal_references": Statutes, codes, case numbers, or legal rules referenced anywhere in the document, with a short "context" describing where/why they appear.
 - "key_demands": Concise, plain-language list of what the document demands or requires of the recipient.
 - "urgency_level": Judge based on stated deadlines and consequences. "critical" for imminent legal action or very short deadlines, down to "low" for informational documents.
+- "safety_flags": An array of category flags if the document involves any of the following. Use an empty array if none apply. Allowed values:
+  - "criminal_charges" — arrest warrants, criminal complaints, indictments
+  - "child_custody" — custody orders, family court matters
+  - "restraining_order" — protective orders, restraining orders
+  - "immigration" — deportation, immigration court notices
+  - "imminent_danger" — threats of violence, emergency orders
+  If any of these categories are detected, include the relevant flag(s) in safety_flags. These documents require professional legal help and the AI should not attempt detailed analysis.
 - "raw_text_length": The exact character length of the document text you were given.
 
 Remember: explicit facts only, null when unknown, and respond with raw JSON only.`;

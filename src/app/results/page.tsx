@@ -65,6 +65,11 @@ export default function ResultsPage() {
     extraction.jurisdiction.state ?? ""
   );
 
+  // Safety-routed (referral-only) results skip detailed analysis, so a
+  // confidence score would be meaningless — and "high confidence" on a hard
+  // refusal sends exactly the wrong message. Hide the banner in that case.
+  const safetyRouted = (extraction.safety_flags?.length ?? 0) > 0;
+
   return (
     <div className="bg-glow-amber min-h-screen px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto flex w-full max-w-5xl gap-10">
@@ -85,7 +90,7 @@ export default function ResultsPage() {
             referralNeeded={analysis.referral_needed}
           />
 
-          <ConfidenceBanner report={confidence} />
+          {!safetyRouted ? <ConfidenceBanner report={confidence} /> : null}
 
           <SummaryCard extraction={extraction} explanation={explanation} />
 

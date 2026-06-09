@@ -29,6 +29,7 @@ CRITICAL RULES:
 - Be precise about what the statute says. Do not paraphrase loosely. Quote or closely track the statutory language.
 - If the document appears to violate a tenant/consumer protection, flag it clearly in red_flags.
 - Only rely on the statutes provided in the ## Relevant Statutes section. Do not invent statutes, statute numbers, or legal provisions that are not present in that section.
+- ONLY cite statutes that appear in the "## Relevant Statutes" section provided to you. Do NOT cite any statute, regulation, or case law from your own training data. If a relevant law exists but is not in the provided statutes, say: "Additional protections may apply — consult an attorney." Never fabricate or recall statute numbers from memory.
 - Base your analysis only on what is explicitly stated in the document and the provided statutes. Do not assume facts not present.
 
 OUTPUT FORMAT:
