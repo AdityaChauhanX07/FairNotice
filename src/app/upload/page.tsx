@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { motion } from "framer-motion";
@@ -18,8 +19,17 @@ import {
   FileQuestion,
   Lock,
   ChevronDown,
+  Loader2,
+  CheckCircle,
+  XCircle,
+  Circle,
   type LucideIcon,
 } from "lucide-react";
+import {
+  runAnalysisPipeline,
+  INITIAL_PIPELINE_STAGES,
+  type PipelineStage,
+} from "@/lib/pipeline";
 
 /* ------------------------------------------------------------------ */
 /* Constants                                                          */
@@ -40,6 +50,14 @@ const DOC_TYPES: { id: string; label: string; icon: LucideIcon }[] = [
   { id: "benefits", label: "Benefits Letter", icon: FileWarning },
   { id: "other", label: "Other", icon: FileQuestion },
 ];
+
+/** Maps the upload page's docType ids to the values the API expects. */
+const DOC_TYPE_API_MAP: Record<string, string> = {
+  eviction: "eviction_notice",
+  insurance: "insurance_denial",
+  benefits: "benefits_letter",
+  other: "other",
+};
 
 const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
@@ -70,14 +88,85 @@ function isImageFile(file: File): boolean {
 }
 
 /* ------------------------------------------------------------------ */
+/* Processing overlay                                                 */
+/* ------------------------------------------------------------------ */
+
+function StageIcon({ status }: { status: PipelineStage["status"] }) {
+  switch (status) {
+    case "active":
+      return <Loader2 className="h-5 w-5 shrink-0 animate-spin text-accent" />;
+    case "complete":
+      return <CheckCircle className="h-5 w-5 shrink-0 text-emerald-500" />;
+    case "error":
+      return <XCircle className="h-5 w-5 shrink-0 text-red-500" />;
+    default:
+      return <Circle className="h-5 w-5 shrink-0 text-muted" />;
+  }
+}
+
+function ProcessingOverlay({ stages }: { stages: PipelineStage[] }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 px-5 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="w-full max-w-md rounded-2xl border border-border bg-surface p-7 shadow-2xl"
+      >
+        <h2 className="text-lg font-semibold text-foreground">
+          Analyzing your document
+        </h2>
+
+        <ul className="mt-6 space-y-4">
+          {stages.map((stage) => {
+            const muted =
+              stage.status === "pending" || stage.status === "complete";
+            return (
+              <li key={stage.step} className="flex items-start gap-3">
+                <StageIcon status={stage.status} />
+                <div className="min-w-0 flex-1">
+                  <p
+                    className={`text-sm font-medium ${
+                      stage.status === "error"
+                        ? "text-red-500"
+                        : muted && stage.status === "pending"
+                          ? "text-muted"
+                          : "text-foreground"
+                    }`}
+                  >
+                    {stage.label}
+                  </p>
+                  {stage.detail ? (
+                    <p className="mt-0.5 text-xs text-muted">{stage.detail}</p>
+                  ) : null}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+
+        <p className="mt-7 text-center text-xs text-muted">
+          This usually takes 15-30 seconds
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* Page                                                               */
 /* ------------------------------------------------------------------ */
 
 export default function UploadPage() {
+  const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [docType, setDocType] = useState<string | null>(null);
   const [jurisdiction, setJurisdiction] = useState("California");
   const [language, setLanguage] = useState("English");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [pipelineStages, setPipelineStages] = useState<PipelineStage[]>(
+    INITIAL_PIPELINE_STAGES
+  );
 
   const onDrop = useCallback((accepted: File[]) => {
     if (accepted.length > 0) {
@@ -106,17 +195,34 @@ export default function UploadPage() {
 
   const canSubmit = file !== null && docType !== null;
 
-  const handleSubmit = () => {
-    if (!canSubmit) return;
-    console.log("Analyze form state:", {
-      file: file
-        ? { name: file.name, size: file.size, type: file.type }
-        : null,
-      documentType: docType,
-      jurisdiction,
-      language,
-    });
-    toast("Analysis pipeline coming soon", { icon: "🚧" });
+  const handleSubmit = async () => {
+    if (!file || !docType || isProcessing) return;
+
+    setPipelineStages(INITIAL_PIPELINE_STAGES);
+    setIsProcessing(true);
+
+    try {
+      await runAnalysisPipeline({
+        file,
+        documentType: DOC_TYPE_API_MAP[docType] ?? "other",
+        jurisdiction,
+        language,
+        onProgress: (stage) => {
+          setPipelineStages((prev) =>
+            prev.map((s) => (s.step === stage.step ? stage : s))
+          );
+        },
+      });
+      // Keep the overlay up through the navigation to the results dashboard.
+      router.push("/results");
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while analyzing your document.";
+      toast.error(message);
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -125,7 +231,10 @@ export default function UploadPage() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="mx-auto w-full max-w-2xl"
+        className={`mx-auto w-full max-w-2xl transition-opacity ${
+          isProcessing ? "pointer-events-none opacity-40" : ""
+        }`}
+        aria-hidden={isProcessing}
       >
         {/* ------------------------------------------------------ */}
         {/* HEADER                                                 */}
@@ -308,9 +417,9 @@ export default function UploadPage() {
         <button
           type="button"
           onClick={handleSubmit}
-          disabled={!canSubmit}
+          disabled={!canSubmit || isProcessing}
           className={`group mt-10 inline-flex w-full items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-base font-semibold transition-all ${
-            canSubmit
+            canSubmit && !isProcessing
               ? "bg-accent text-background shadow-lg shadow-accent/20 hover:bg-accent-hover hover:shadow-accent/30"
               : "cursor-not-allowed bg-surface text-muted"
           }`}
@@ -334,6 +443,8 @@ export default function UploadPage() {
           </p>
         </div>
       </motion.div>
+
+      {isProcessing ? <ProcessingOverlay stages={pipelineStages} /> : null}
     </div>
   );
 }
