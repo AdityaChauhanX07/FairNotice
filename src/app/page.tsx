@@ -1,361 +1,583 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, type Variants } from "framer-motion";
-import {
-  ArrowRight,
-  Upload,
-  Search,
-  FileText,
-  Home,
-  ShieldX,
-  FileWarning,
-  CheckCircle,
-  AlertTriangle,
-  Lock,
-} from "lucide-react";
+import { useEffect, useRef } from "react";
+import "./landing.css";
 
-/* lucide v1 dropped the GitHub brand mark, so we inline it. */
-function GithubIcon({ className }: { className?: string }) {
+/* ------------------------------------------------------------------ */
+/* Inline icons (match the Claude Design — no lucide on the landing)   */
+/* ------------------------------------------------------------------ */
+
+function BrandMark() {
   return (
-    <svg
-      role="img"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    <svg className="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3.5" y="2.5" width="17" height="19" rx="3" stroke="currentColor" strokeWidth="1.6" />
+      <line x1="7.5" y1="8" x2="16.5" y2="8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
+      <line x1="7.5" y1="12" x2="16.5" y2="12" stroke="#36D6A1" strokeWidth="2" strokeLinecap="round" />
+      <line x1="7.5" y1="16" x2="12.5" y2="16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
     </svg>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* Animation helpers                                                  */
+/* Data                                                                */
 /* ------------------------------------------------------------------ */
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
-};
-
-function FadeUp({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      className={className}
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function CountUp({
-  end,
-  prefix = "",
-  suffix = "",
-  duration = 1.6,
-}: {
-  end: number;
-  prefix?: string;
-  suffix?: string;
-  duration?: number;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / (duration * 1000), 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      setValue(Math.round(eased * end));
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, end, duration]);
-
-  return (
-    <span ref={ref}>
-      {prefix}
-      {value}
-      {suffix}
-    </span>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Data                                                               */
-/* ------------------------------------------------------------------ */
-
-const stats = [
-  { end: 90, suffix: "%", label: "of tenants face eviction without a lawyer" },
+const STATS = [
   {
-    end: 50,
-    suffix: "%+",
-    label: "of denied insurance claims are overturned on appeal",
+    fig: "~90",
+    sup: "%",
+    lead: "of tenants face eviction court without a lawyer.",
+    body: "Their landlords almost always have one. The paperwork is written to be obeyed, not understood.",
   },
   {
-    end: 60,
-    prefix: "$",
-    suffix: "B+",
-    label: "in government benefits go unclaimed annually",
+    fig: "50",
+    sup: "%+",
+    lead: "of denied health claims get overturned on appeal.",
+    body: "Most people never appeal, because the denial letter never tells them they can.",
+  },
+  {
+    fig: "$60",
+    sup: "B+",
+    lead: "in government benefits go unclaimed every year.",
+    body: "Not because people don’t qualify. Because the forms are confusing enough to give up on.",
   },
 ];
 
-const steps = [
+const DOCS = [
   {
-    icon: Upload,
-    title: "Upload Your Document",
-    desc: "PDF, image, or photo of any legal notice, denial letter, or government document.",
-  },
-  {
-    icon: Search,
-    title: "AI Analyzes & Cites",
-    desc: "Every claim is checked against real statutes. No guesses — citations or silence.",
-  },
-  {
-    icon: FileText,
-    title: "Get Your Action Plan",
-    desc: "Plain-language explanation, deadline alerts, and a draft response letter you can send.",
-  },
-];
-
-const documents = [
-  {
-    icon: Home,
     title: "Eviction Notices",
-    desc: "Understand your rights, verify notice periods, and respond with legal backing.",
+    desc: "Pay-or-quit, just-cause, improper service, miscounted deadlines. The notice that arrives taped to a door.",
+    count: "17",
+    of: "tenant-law statutes",
   },
   {
-    icon: ShieldX,
     title: "Insurance Denials",
-    desc: "Decode denial reasons, check appeal rights, and draft your appeal letter.",
+    desc: "Claim denials, appeal rights, IMR timelines, bad-faith and ACA protections you weren’t told about.",
+    count: "12",
+    of: "insurance statutes",
   },
   {
-    icon: FileWarning,
     title: "Benefits Terminations",
-    desc: "Verify termination grounds, find unclaimed eligibility, and fight back.",
-  },
-];
-
-const principles = [
-  {
-    icon: CheckCircle,
-    text: "Every claim cites a specific statute. No citation, no claim.",
-  },
-  {
-    icon: AlertTriangle,
-    text: "When confidence is low, the AI says so — and connects you to real help.",
-  },
-  {
-    icon: Lock,
-    text: "Your documents are processed in-memory and never stored.",
+    desc: "CalFresh, Medi-Cal, fair-hearing rights, notice requirements. The letter that quietly cuts you off.",
+    count: "10",
+    of: "benefits statutes",
   },
 ];
 
 /* ------------------------------------------------------------------ */
-/* Page                                                               */
+/* Page                                                                */
 /* ------------------------------------------------------------------ */
 
 export default function LandingPage() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* Hero entrance — stagger the masked lines + faded elements */
+    const hero = root.querySelector<HTMLElement>(".hero");
+    const playHero = () => {
+      if (!hero) return;
+      if (!reduce) {
+        const lines = hero.querySelectorAll<HTMLElement>(".line-mask > span");
+        lines.forEach((el, i) => {
+          el.style.transitionDelay = `${0.18 + i * 0.085}s`;
+        });
+        const base = 0.18 + lines.length * 0.085;
+        hero.querySelectorAll<HTMLElement>(".reveal-hero").forEach((el, i) => {
+          el.style.animationDelay = `${base + i * 0.07}s`;
+        });
+        void hero.offsetWidth; // commit initial state before transitions
+      }
+      hero.classList.add("ready");
+    };
+    if (document.fonts && document.fonts.ready) {
+      Promise.race([
+        document.fonts.ready,
+        new Promise((r) => setTimeout(r, 600)),
+      ]).then(playHero);
+    } else {
+      setTimeout(playHero, 60);
+    }
+
+    /* Scroll-triggered reveals */
+    const items = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (reduce || !("IntersectionObserver" in window)) {
+      items.forEach((el) => el.classList.add("in"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          const group = el.parentElement;
+          const sibs = group
+            ? Array.from(group.querySelectorAll(":scope > [data-reveal]"))
+            : [el];
+          const idx = Math.max(0, sibs.indexOf(el));
+          el.style.transitionDelay = `${Math.min(idx, 4) * 0.08}s`;
+          el.classList.add("in");
+          obs.unobserve(el);
+        });
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+    );
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="bg-glow-amber">
-      {/* ---------------------------------------------------------- */}
-      {/* HERO                                                       */}
-      {/* ---------------------------------------------------------- */}
-      <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-5 py-20 text-center sm:px-8">
-        {/* Radial amber glow behind the headline for depth */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[760px] max-w-[120vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.12] blur-[130px]"
-        />
-        <div className="mx-auto w-full max-w-4xl">
-        <motion.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-balance text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl"
-        >
-          Every document you don&apos;t understand is a right you can&apos;t
-          defend.
-        </motion.h1>
+    <div className="landing-page landing-root" ref={rootRef}>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
 
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.12 }}
-          className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-muted sm:text-xl"
-        >
-          Upload the legal document you received. Get a plain-language
-          explanation, statute-backed analysis, and a draft response — in
-          seconds.
-        </motion.p>
+      <main id="main">
+        <span id="top" />
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.24 }}
-          className="mt-10 flex flex-col items-center gap-3"
-        >
-          <Link
-            href="/upload"
-            className="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-background shadow-lg shadow-accent/20 transition-all hover:scale-[1.03] hover:bg-accent-hover hover:shadow-accent/40 hover:brightness-105 active:scale-100"
-          >
-            Upload Your Document
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-          <p className="text-sm text-muted">
-            Free. Open source. No data stored.
-          </p>
-        </motion.div>
-        </div>
-      </section>
+        {/* ============ HERO ============ */}
+        <header className="hero" id="hero">
+          <div className="wrap">
+            <p className="eyebrow hero-eyebrow reveal-hero">
+              PLAIN-LANGUAGE LEGAL HELP <span className="dot">·</span> CALIFORNIA{" "}
+              <span className="dot">·</span> NEVER STORED
+            </p>
 
-      {/* ---------------------------------------------------------- */}
-      {/* PROBLEM STATS                                              */}
-      {/* ---------------------------------------------------------- */}
-      <section className="border-y border-border bg-surface/40">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 py-14 sm:grid-cols-3 sm:px-8">
-          {stats.map((stat, i) => (
-            <FadeUp key={stat.label} delay={i * 0.1} className="text-center">
-              <div className="text-4xl font-bold text-accent sm:text-5xl">
-                <CountUp
-                  end={stat.end}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                />
-              </div>
-              <p className="mx-auto mt-3 max-w-xs text-sm text-muted">
-                {stat.label}
-              </p>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
+            <h1 aria-label="Upload the document you don't understand. Get back the rights you didn't know you had.">
+              <span className="line-mask">
+                <span>Upload the document</span>
+              </span>
+              <span className="line-mask">
+                <span>you don&rsquo;t understand.</span>
+              </span>
+              <span className="line-mask">
+                <span>
+                  Get back the <span className="accent">rights</span>
+                </span>
+              </span>
+              <span className="line-mask">
+                <span>you didn&rsquo;t know you had.</span>
+              </span>
+            </h1>
 
-      {/* ---------------------------------------------------------- */}
-      {/* HOW IT WORKS                                               */}
-      {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <FadeUp className="mb-14 text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            How it works
-          </h2>
-        </FadeUp>
+            <p className="hero-sub reveal-hero">
+              FairNotice reads eviction notices, insurance denials, and benefits
+              letters. It explains them in plain language, checks{" "}
+              <b>every claim against real California statutes</b>, and drafts
+              your response. In seconds.
+            </p>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-          {steps.map((step, i) => (
-            <FadeUp key={step.title} delay={i * 0.12} className="h-full">
-              <div className="relative h-full">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-surface text-accent">
-                  <step.icon className="h-6 w-6" />
-                </div>
-                <div className="mb-2 flex items-center gap-2">
-                  <span className="text-sm font-semibold text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-lg font-semibold">{step.title}</h3>
-                </div>
-                <p className="text-sm leading-relaxed text-muted">
-                  {step.desc}
-                </p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
+            <div className="hero-cta reveal-hero">
+              <Link className="btn btn-primary" href="/upload">
+                Upload Your Document <span className="arw">→</span>
+              </Link>
+              <Link className="btn btn-ghost" href="/upload">
+                Try a sample <span className="arw">→</span>
+              </Link>
+            </div>
 
-      {/* ---------------------------------------------------------- */}
-      {/* SUPPORTED DOCUMENTS                                        */}
-      {/* ---------------------------------------------------------- */}
-      <section className="border-t border-border bg-surface/30">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <FadeUp className="mb-14 text-center">
-            <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-              Built for the documents that change your life
-            </h2>
-          </FadeUp>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {documents.map((doc, i) => (
-              <FadeUp key={doc.title} delay={i * 0.12} className="h-full">
-                <div className="group h-full rounded-2xl border border-border bg-surface p-7 transition-colors hover:border-accent/40 hover:bg-surface-hover">
-                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                    <doc.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mb-2 text-lg font-semibold">{doc.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted">
-                    {doc.desc}
-                  </p>
-                </div>
-              </FadeUp>
-            ))}
+            <p className="hero-meta reveal-hero">
+              <span>Free</span>
+              <span className="sep">·</span>
+              <span>Open source</span>
+              <span className="sep">·</span>
+              <span>Processed in-memory</span>
+            </p>
           </div>
-        </div>
-      </section>
+          <div className="scroll-cue" aria-hidden="true">
+            <span>SCROLL</span>
+            <span className="bar" />
+          </div>
+        </header>
 
-      {/* ---------------------------------------------------------- */}
-      {/* TRUST / PHILOSOPHY                                         */}
-      {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-28">
-        <FadeUp className="mb-12 text-center">
-          <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-            AI that knows what it doesn&apos;t know
-          </h2>
-        </FadeUp>
+        {/* ============ THE GAP ============ */}
+        <section className="band band-line" id="why">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <span className="eyebrow">THE ACCESS-TO-JUSTICE GAP</span>
+              <h2 className="sec-title">
+                Millions get documents that change their lives,
+                <br />
+                and have no idea what they <em>actually say.</em>
+              </h2>
+            </div>
 
-        <div className="space-y-6">
-          {principles.map((p, i) => (
-            <FadeUp key={p.text} delay={i * 0.1}>
-              <div className="flex items-start gap-4 rounded-xl border border-border bg-surface/50 p-5">
-                <div className="mt-0.5 shrink-0 text-accent">
-                  <p.icon className="h-6 w-6" />
+            <div className="stats">
+              {STATS.map((s) => (
+                <div className="stat-row" data-reveal key={s.lead}>
+                  <div className="stat-fig">
+                    {s.fig}
+                    <sup>{s.sup}</sup>
+                  </div>
+                  <div className="stat-body">
+                    <p className="lead">{s.lead}</p>
+                    <p>{s.body}</p>
+                  </div>
                 </div>
-                <p className="text-base leading-relaxed text-foreground/90">
-                  {p.text}
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============ HOW IT WORKS ============ */}
+        <section className="band band-line" id="how">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <span className="eyebrow">HOW IT WORKS</span>
+              <h2 className="sec-title">Three steps. Thirty to ninety seconds.</h2>
+            </div>
+
+            <div className="steps">
+              <div className="step" data-reveal>
+                <svg className="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 16V4m0 0L7 9m5-5l5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+                <div className="num">01</div>
+                <h3>Upload</h3>
+                <p>
+                  Drop a PDF, photo, or screenshot of the letter you received.
+                  Or load a sample to see the whole flow.
                 </p>
               </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
+              <div className="step" data-reveal>
+                <svg className="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 6h11M4 12h16M4 18h9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  <circle cx="19" cy="6" r="2.4" stroke="#36D6A1" strokeWidth="1.6" />
+                </svg>
+                <div className="num">02</div>
+                <h3>It reads &amp; cites</h3>
+                <p>
+                  FairNotice extracts every claim and deadline, then checks each
+                  one against real statutes, citing the law or saying it found
+                  none.
+                </p>
+              </div>
+              <div className="step" data-reveal>
+                <svg className="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12l4.5 4.5L19 7" stroke="#36D6A1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div className="num">03</div>
+                <h3>Your action plan</h3>
+                <p>
+                  A plain-language breakdown, your rights, red flags, your
+                  options, and a draft response letter ready to send.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      {/* ---------------------------------------------------------- */}
-      {/* FOOTER                                                     */}
-      {/* ---------------------------------------------------------- */}
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-5 py-10 text-center sm:px-8">
-          <p className="text-sm text-muted">Built for STEMINATE Hacks 2026</p>
-          <a
-            href="https://github.com/AdityaChauhanX07/steminate"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-medium text-muted transition-colors hover:text-accent"
-          >
-            <GithubIcon className="h-4 w-4" />
-            View on GitHub
-          </a>
+        {/* ============ CITED OR SILENT ============ */}
+        <section className="band band-line" id="cited">
+          <div className="wrap">
+            <div className="cite-grid">
+              <div className="cite-copy" data-reveal>
+                <span className="eyebrow" style={{ display: "inline-block", marginBottom: 20 }}>
+                  THE CORE RULE
+                </span>
+                <h2>
+                  Cited, or <em>silent.</em>
+                </h2>
+                <p>
+                  Every statement about your rights is backed by a specific
+                  statute and shown clearly, never buried in prose. FairNotice
+                  never answers from general legal knowledge. It reasons about{" "}
+                  <em style={{ fontStyle: "normal", color: "var(--text)" }}>your</em>{" "}
+                  document against real law.
+                </p>
+                <p className="silent">
+                  &ldquo;No statute found in our database addressing this. Consult
+                  a local attorney.&rdquo; That is what it says when it can&rsquo;t
+                  find the law, instead of guessing.
+                </p>
+              </div>
+
+              {/* static visual demo — not connected to real data */}
+              <div className="analysis" data-reveal aria-label="Example claim analysis">
+                <div className="ah">
+                  <span className="doc-tag">EVICTION NOTICE · CLAIM 02</span>
+                  <span className="badge invalid">Potentially invalid</span>
+                </div>
+                <blockquote className="claim-quote">
+                  &ldquo;Tenant must pay $1,850 rent plus a $150 administrative
+                  fee within 3 days or vacate.&rdquo;
+                </blockquote>
+                <div className="ana-label">PLAIN-LANGUAGE ANALYSIS</div>
+                <p className="ana-text">
+                  A 3-day pay-or-quit notice can demand <strong>rent only</strong>.
+                  Bundling a separate &ldquo;admin fee&rdquo; into the amount due
+                  can <strong>void the entire notice</strong> — meaning this demand
+                  may not be legally enforceable as written.
+                </p>
+                <div className="evidence">
+                  <div className="ana-label">GROUNDED IN</div>
+                  <div className="statute-list">
+                    <span className="statute">
+                      <span>CCP §1161</span>
+                      <span className="who">supports you</span>
+                    </span>
+                    <span className="statute">
+                      <span>Civ. Code §1946.2</span>
+                      <span className="who">supports you</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ============ WHAT IT READS ============ */}
+        <section className="band band-line" id="docs">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <span className="eyebrow">WHAT IT READS</span>
+              <h2 className="sec-title">
+                Three kinds of letter. <em>One</em> curated body of law.
+              </h2>
+              <p className="sec-sub">
+                39 California statutes, hand-curated and fully inspectable, with
+                no black-box similarity scores.
+              </p>
+            </div>
+
+            <div className="rows">
+              {DOCS.map((d) => (
+                <div className="row-item" data-reveal key={d.title}>
+                  <h3>{d.title}</h3>
+                  <p>{d.desc}</p>
+                  <div className="cnt">
+                    <b>{d.count}</b> {d.of}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============ WHAT IT CATCHES ============ */}
+        <section className="band band-line" id="catches">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <span className="eyebrow">FROM THE SAMPLE EVICTION NOTICE</span>
+              <h2 className="sec-title">
+                What a careful read <em>catches.</em>
+              </h2>
+              <p className="sec-sub">
+                Four findings the app flags on the eviction notice it ships with.
+                Each one links to a specific statute and a concrete next step.
+              </p>
+            </div>
+
+            <div className="catch-grid" data-reveal>
+              <div className="catch">
+                <div className="ct-top">
+                  <svg className="flag" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 21V4m0 0h11l-2 4 2 4H5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <h4>Bundled fees</h4>
+                </div>
+                <p>
+                  The notice demands a <span className="hl">$150 &ldquo;admin fee&rdquo;</span>{" "}
+                  alongside rent. A 3-day pay-or-quit can only demand rent.
+                  Bundling fees can void the entire notice.
+                </p>
+                <span className="statute">
+                  <span>CCP §1161</span>
+                </span>
+              </div>
+              <div className="catch">
+                <div className="ct-top">
+                  <svg className="flag" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="13" r="8" stroke="currentColor" strokeWidth="1.6" />
+                    <path d="M12 9v4l2.5 2.5M9 2h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                  <h4>Miscounted deadline</h4>
+                </div>
+                <p>
+                  The 3-day window <span className="hl">counts weekends</span>, but
+                  weekends and judicial holidays must be excluded. The real
+                  deadline is later than stated.
+                </p>
+                <span className="statute">
+                  <span>CCP §1161</span>
+                </span>
+              </div>
+              <div className="catch">
+                <div className="ct-top">
+                  <svg className="flag" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 7l8-4 8 4-8 4-8-4z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                    <path d="M4 7v7c0 3 8 6 8 6s8-3 8-6V7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                  <h4>Improper service</h4>
+                </div>
+                <p>
+                  Posting on the door <span className="hl">alone</span>{" "}
+                  {"may not satisfy California’s service requirements, which can be a defense in court."}
+                </p>
+                <span className="statute">
+                  <span>CCP §1162</span>
+                </span>
+              </div>
+              <div className="catch">
+                <div className="ct-top">
+                  <svg className="flag" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                    <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <h4>Right to cure</h4>
+                </div>
+                <p>
+                  After <span className="hl">12 months of tenancy</span>, just-cause
+                  protections kick in, and curable violations need their own notice
+                  and a chance to fix the problem.
+                </p>
+                <span className="statute">
+                  <span>Civ. Code §1946.2</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ============ PRINCIPLES ============ */}
+        <section className="band band-line" id="principles">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <span className="eyebrow">PRINCIPLES</span>
+              <h2 className="sec-title">
+                A tool that knows what it doesn&rsquo;t know is safer than one
+                that always has an answer.
+              </h2>
+            </div>
+
+            <div className="principles">
+              <div className="principle" data-reveal>
+                <svg className="pic" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 7h8M9 12h8M9 17h5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  <path d="M4 7l1.2 1.2L7.5 6M4 12l1.2 1.2L7.5 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <h3>Document-grounded</h3>
+                <p>
+                  FairNotice never answers from general legal knowledge. It
+                  reasons about your specific document against real statutes.
+                </p>
+              </div>
+              <div className="principle" data-reveal>
+                <svg className="pic" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 7h8M9 12h8M9 17h5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  <path d="M4 7l1.2 1.2L7.5 6M4 12l1.2 1.2L7.5 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <h3>Cited or silent</h3>
+                <p>
+                  Every claim about your rights cites a statute. When no law is
+                  found, it says so plainly, never guesses.
+                </p>
+              </div>
+              <div className="principle" data-reveal>
+                <svg className="pic" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+                <h3>Refusal as a feature</h3>
+                <p>
+                  For matters out of scope — criminal, custody, safety — the app
+                  refuses and routes you to a professional. Knowing its limits is
+                  the point.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ============ CLOSING CTA ============ */}
+        <section className="closing band-line" id="upload">
+          <div className="wrap">
+            <h2 data-reveal>
+              Bring the letter that <em>scared</em> you.
+            </h2>
+            <div className="cta-row" data-reveal>
+              <Link className="btn btn-primary" href="/upload">
+                Upload Your Document <span className="arw">→</span>
+              </Link>
+              <Link className="btn btn-ghost" href="/upload">
+                Try a sample <span className="arw">→</span>
+              </Link>
+            </div>
+            <p className="reassure" data-reveal>
+              Processed in-memory · Never stored · Cites real California law
+            </p>
+          </div>
+        </section>
+      </main>
+
+      {/* ============ FOOTER ============ */}
+      <footer className="footer">
+        <div className="wrap">
+          <div className="footer-grid">
+            <div>
+              <Link className="brand" href="/" aria-label="FairNotice home">
+                <BrandMark />
+                <span className="name">
+                  <b>Fair</b>Notice
+                </span>
+              </Link>
+              <p
+                style={{
+                  marginTop: 16,
+                  color: "var(--faint)",
+                  fontSize: 14,
+                  maxWidth: "30ch",
+                }}
+              >
+                Upload the document you don&rsquo;t understand. Get back the
+                rights you didn&rsquo;t know you had.
+              </p>
+            </div>
+            <div className="footer-links">
+              <div className="footer-col">
+                <h5>Product</h5>
+                <a href="#how">How it works</a>
+                <a href="#docs">What it reads</a>
+                <a href="#principles">Principles</a>
+                <Link href="/upload">Upload</Link>
+              </div>
+              <div className="footer-col">
+                <h5>The law</h5>
+                <a href="#cited">Cited or silent</a>
+                <a href="#catches">What it catches</a>
+                <a href="#docs">Statute coverage</a>
+              </div>
+              <div className="footer-col">
+                <h5>Trust</h5>
+                <a href="#principles">Privacy</a>
+                <a href="#principles">Confidence scoring</a>
+                <a href="#principles">Safety routing</a>
+              </div>
+            </div>
+          </div>
+          <div className="disclaimer">
+            <p className="legal">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v3m0 12v3M5 8l5 4-5 4m14-8l-5 4 5 4M3 12h3m12 0h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+              </svg>
+              <span>
+                FairNotice provides{" "}
+                <b style={{ color: "var(--dim)", fontWeight: 600 }}>
+                  legal information, not legal advice.
+                </b>{" "}
+                It does not create an attorney-client relationship. California
+                statute coverage is deepest; other states are analyzed with lower
+                confidence. Laws change, so verify against official sources.
+              </span>
+            </p>
+            <span className="copy">FAIRNOTICE · STEMINATE 2026</span>
+          </div>
         </div>
       </footer>
     </div>

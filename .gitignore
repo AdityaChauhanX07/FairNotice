@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# design reference (Claude Design HTML/CSS source — not part of the app)
+/claude-design
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

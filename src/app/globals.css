@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
 @theme {
+  /* ----------------------------------------------------------------
+     App (current) Tailwind tokens — drive the upload/results/error
+     pages' utility classes (bg-background, text-accent, …). Kept so
+     those pages keep working until they are re-skinned separately.
+     ---------------------------------------------------------------- */
   --color-background: #0a0f1c;
   --color-surface: #0f1626;
   --color-surface-hover: #161f33;
@@ -10,15 +15,109 @@
   --color-accent: #f59e0b;
   --color-accent-hover: #d97706;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Brand fonts — provided by next/font as --ff-serif / --ff-sans /
+     --ff-mono on <html>; exposed here as --font-* (and as Tailwind
+     font-serif / font-sans / font-mono utilities). */
+  --font-sans: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--ff-serif), Georgia, "Times New Roman", serif;
+  --font-mono: var(--ff-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
+/* ==================================================================
+   LANDING THEME — dark · editorial · trust-teal (default :root)
+   Ported from claude-design/assets/landing.css
+   ================================================================== */
 :root {
   color-scheme: dark;
+
+  /* font aliases used by the ported design CSS */
+  --serif: var(--font-serif);
+  --sans: var(--font-sans);
+  --mono: var(--font-mono);
+
+  /* surfaces */
+  --bg: #08090a;
+  --bg-elev: #0d0e10;
+  --bg-elev-2: #131517;
+  --bg-tint: #0b1310;
+  --surface: #141516;
+
+  /* lines */
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.13);
+  --border: #2a2b2d;
+
+  /* text */
+  --fg: #e8e6e1;
+  --text: #eceeed;
+  --muted: #8a8880;
+  --dim: #969c9a;
+  --faint: #686e6c;
+
+  /* accent — trust teal */
+  --accent: #36d6a1;
+  --teal: #36d6a1;
+  --accent-deep: #25b486;
+  --accent-ink: #04221a;
+  --accent-soft: rgba(54, 214, 161, 0.12);
+  --accent-line: rgba(54, 214, 161, 0.3);
+  --accent-glow: rgba(54, 214, 161, 0.16);
+
+  /* data signals */
+  --amber: #e6b469;
+  --red: #e5786e;
+
+  /* motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* layout */
+  --pad: clamp(20px, 5vw, 96px);
+  --maxw: 1240px;
 }
 
+/* ==================================================================
+   APP THEME — light · warm paper (opt-in via .theme-light)
+   Ported from claude-design/assets/app.css, for the future app re-skin
+   ================================================================== */
+.theme-light {
+  color-scheme: light;
+
+  --bg: #f4f3ee;
+  --bg-2: #fbfaf6;
+  --surface: #ffffff;
+  --surface-2: #faf9f5;
+  --surface-3: #f2f1eb;
+
+  --line: #e7e3d9;
+  --line-2: #dbd6c9;
+  --border: #d4d2cc;
+
+  --fg: #1a1917;
+  --ink: #1b1d1a;
+  --ink-2: #565a50;
+  --ink-3: #8b8e83;
+  --muted: #6b6a65;
+
+  --accent: #0e8a62;
+  --accent-2: #0a6f4e;
+  --accent-bg: #e5f2eb;
+  --accent-bd: #bce0cd;
+
+  --amber: #aa6a12;
+  --red: #be3b30;
+  --slate: #3d5a86;
+}
+
+/* ---------- Base ---------- */
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -29,7 +128,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Subtle radial glow accents reused across sections */
+/* Subtle radial glow accent reused across the (current) app pages */
 .bg-glow-amber {
   background-image: radial-gradient(
     600px circle at 50% 0%,
