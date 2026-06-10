@@ -39,6 +39,9 @@ yarn-error.log*
 # design reference (Claude Design HTML/CSS source — not part of the app)
 /claude-design
 
+# tesseract.js OCR language data (downloaded at runtime, ~5MB each)
+*.traineddata
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
