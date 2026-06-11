@@ -1,12 +1,13 @@
 import Groq from "groq-sdk";
 
-/**
- * Singleton Groq client. Reads the API key from the environment so the key is
- * never bundled into client code (this module must only be imported server-side).
- */
-export const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+let _groq: Groq | null = null;
+
+function getGroq(): Groq {
+  if (!_groq) {
+    _groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  }
+  return _groq;
+}
 
 /** Default model used across the extraction pipeline. */
 export const GROQ_MODEL = "llama-3.3-70b-versatile";
@@ -30,7 +31,7 @@ export async function chatCompletion(
   const { temperature = 0.1, max_tokens = 4096 } = options;
 
   try {
-    const completion = await groq.chat.completions.create({
+    const completion = await getGroq().chat.completions.create({
       model: GROQ_MODEL,
       temperature,
       max_tokens,
