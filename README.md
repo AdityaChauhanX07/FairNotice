@@ -39,7 +39,7 @@ Upload file
   -> /api/parse     (extract raw text from PDF/image/txt)
   -> /api/extract   (LLM turns raw text into structured JSON: claims, deadlines, parties, amounts)
   -> /api/analyze   (search statute store + LLM analyzes each claim against retrieved statutes)
-  -> /api/explain   (two parallel LLM calls: plain-language explanation + action plan with response letter)
+  -> /api/explain   (two LLM calls: plain-language explanation + action plan with response letter)
   -> Results dashboard
 ```
 
@@ -90,15 +90,16 @@ The score is transparent. Every deduction (no statute match: -15, out-of-state j
 
 | Layer | What |
 |---|---|
-| Frontend | Next.js 16, React, Tailwind CSS, Framer Motion |
-| LLM | Groq (Llama 3.3 70B Versatile) |
+| Frontend | Next.js 16, React, Tailwind CSS |
+| LLM | Groq SDK + Llama 3.3 70B Versatile |
 | Statute retrieval | Custom keyword RAG over curated JSON |
 | OCR | Tesseract.js |
 | PDF parsing | pdf-parse |
+| Deployment | Vercel |
 
 ## Getting started
 
-You need Node.js 18+ and a [Groq API key](https://console.groq.com) (free tier works).
+You need Node.js 20+ and a [Groq API key](https://console.groq.com) (free tier works).
 
 ```bash
 git clone https://github.com/AdityaChauhanX07/steminate.git
@@ -115,23 +116,27 @@ Open `http://localhost:3000`. The upload page has one-click sample documents so 
 ```
 src/
   app/
+    page.tsx                        # Landing page
+    (app)/
+      layout.tsx                    # App shell (topbar, light theme)
+      upload/page.tsx               # Upload + processing flow
+      results/page.tsx              # Results dashboard
+      error/page.tsx                # Error page
     api/
-      parse/route.ts        # Text extraction (PDF/OCR/txt)
-      extract/route.ts       # Structured extraction (LLM)
-      analyze/route.ts       # Statute-grounded analysis (RAG + LLM)
-      explain/route.ts       # Explanation + action plan (parallel LLM)
-    page.tsx                 # Landing page
-    upload/page.tsx          # Upload + processing flow
-    results/page.tsx         # Results dashboard
-  components/results/        # Dashboard section components
+      parse/route.ts                # Stage 1: text extraction (PDF/OCR/txt)
+      extract/route.ts              # Stage 2: structured extraction (LLM)
+      analyze/route.ts              # Stage 3: statute-grounded analysis (RAG + LLM)
+      explain/route.ts              # Stage 4: explanation + action plan (LLM)
+  components/results/               # Dashboard section components
   lib/
-    pipeline.ts              # Client-side pipeline orchestrator
-    confidence.ts            # Confidence scoring
-    groq.ts                  # Groq client wrapper
-    prompts/                 # All system prompts (visible, auditable)
-    rag/statute-store.ts     # Statute retrieval engine
-  data/statutes/             # Curated statute JSON files
-public/samples/              # One-click demo documents
+    pipeline.ts                     # Client-side pipeline orchestrator
+    confidence.ts                   # Confidence scoring engine
+    results-adapter.ts              # Maps pipeline output to view-model
+    groq.ts                         # Groq client wrapper with retry logic
+    prompts/                        # All system prompts (visible, auditable)
+    rag/statute-store.ts            # Statute retrieval engine
+  data/statutes/                    # Curated statute JSON files
+public/samples/                     # One-click demo documents
 ```
 
 ## Privacy
