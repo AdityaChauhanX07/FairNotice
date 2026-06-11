@@ -30,7 +30,7 @@ export interface ResultsPayload {
 }
 
 /** `sessionStorage` key shared by the upload flow and the results page. */
-export const RESULTS_STORAGE_KEY = "steminate:results";
+export const RESULTS_STORAGE_KEY = "fairnotice:results";
 
 /* ------------------------------------------------------------------ */
 /* Mock scenario — California 3-day notice to pay rent or quit         */

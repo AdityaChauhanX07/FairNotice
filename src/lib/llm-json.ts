@@ -11,9 +11,14 @@ export function stripCodeFences(text: string): string {
   let cleaned = text.trim();
 
   if (cleaned.startsWith("```")) {
-    // Remove the opening fence (with an optional language tag) and closing fence.
+    // Remove the opening fence (with an optional language tag) and the last closing fence.
     cleaned = cleaned.replace(/^```[a-zA-Z]*\s*\n?/, "");
-    cleaned = cleaned.replace(/\n?```\s*$/, "");
+    const lastFence = cleaned.lastIndexOf("\n```");
+    if (lastFence !== -1) {
+      cleaned = cleaned.slice(0, lastFence);
+    } else if (cleaned.endsWith("```")) {
+      cleaned = cleaned.slice(0, -3);
+    }
   }
 
   return cleaned.trim();

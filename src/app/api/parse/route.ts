@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PDFParse } from "pdf-parse";
+import pdfParse from "pdf-parse";
 import { createWorker } from "tesseract.js";
 
 // pdf-parse and tesseract.js rely on Node.js APIs, so this route must run on
@@ -53,13 +53,8 @@ async function extractDirect(buffer: Buffer): Promise<string> {
 }
 
 async function extractPdf(buffer: Buffer): Promise<string> {
-  const parser = new PDFParse({ data: new Uint8Array(buffer) });
-  try {
-    const result = await parser.getText();
-    return result.text;
-  } finally {
-    await parser.destroy();
-  }
+  const result = await pdfParse(buffer);
+  return result.text;
 }
 
 async function extractImage(buffer: Buffer): Promise<string> {

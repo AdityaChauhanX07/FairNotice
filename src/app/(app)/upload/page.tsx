@@ -34,7 +34,7 @@ const DOC_TYPES: { id: string; label: string }[] = [
 const DOC_TYPE_API_MAP: Record<string, string> = {
   eviction: "eviction_notice",
   insurance: "insurance_denial",
-  benefits: "benefits_letter",
+  benefits: "benefits_termination",
   other: "other",
 };
 
