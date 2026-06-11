@@ -1,89 +1,43 @@
-"use client";
+import type { ResultsViewModel } from "@/lib/results-adapter";
+import type { UrgencyLevel } from "@/lib/types";
+import { Block, Statute } from "./shared";
 
-import { Clock } from "lucide-react";
-import type { TimelineEntry } from "@/lib/types";
-import {
-  Card,
-  Pill,
-  Section,
-  SectionHeading,
-  URGENCY_STYLES,
-} from "./shared";
-
-function whenLabel(entry: TimelineEntry): string {
-  if (entry.date) {
-    const parsed = new Date(entry.date);
-    if (!Number.isNaN(parsed.getTime())) {
-      return parsed.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        timeZone: "UTC",
-      });
-    }
-  }
-  if (entry.days_remaining != null) {
-    return `${entry.days_remaining} day${
-      entry.days_remaining === 1 ? "" : "s"
-    } from notice`;
-  }
-  return "Timing varies";
+function urgencyBadge(u: UrgencyLevel): string {
+  if (u === "critical") return "b-red";
+  if (u === "high") return "b-amber";
+  return "b-slate";
 }
 
-export interface DeadlineTimelineProps {
-  timeline: TimelineEntry[];
-}
-
-export function DeadlineTimeline({ timeline }: DeadlineTimelineProps) {
-  if (timeline.length === 0) return null;
+export function DeadlineTimeline({
+  index,
+  deadlines,
+}: {
+  index: number;
+  deadlines: ResultsViewModel["deadlines"];
+}) {
+  if (deadlines.length === 0) return null;
 
   return (
-    <Section id="deadlines">
-      <SectionHeading icon={<Clock className="h-5 w-5" />}>
-        Your Deadlines
-      </SectionHeading>
-
-      <div className="relative mt-6 pl-2">
-        {/* Vertical rail */}
-        <div className="absolute bottom-2 left-[11px] top-2 w-px bg-border" />
-
-        <ol className="space-y-5">
-          {timeline.map((entry, i) => {
-            const style = URGENCY_STYLES[entry.urgency];
-            return (
-              <li key={i} className="relative pl-8">
-                {/* Node */}
-                <span
-                  className="absolute left-0 top-1.5 h-[18px] w-[18px] rounded-full border-2 border-background"
-                  style={{ backgroundColor: style.dot }}
-                />
-                <Card className="p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-xs font-semibold uppercase tracking-wide text-muted">
-                      {whenLabel(entry)}
-                    </span>
-                    <Pill className={style.className}>{style.label}</Pill>
-                  </div>
-                  <p className="mt-2 font-semibold text-foreground">
-                    {entry.action}
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-muted">
-                    {entry.detail}
-                  </p>
-                  {entry.statute_basis ? (
-                    <p className="mt-2 text-xs text-muted/80">
-                      Basis:{" "}
-                      <span className="text-accent/90">
-                        {entry.statute_basis}
-                      </span>
-                    </p>
-                  ) : null}
-                </Card>
-              </li>
-            );
-          })}
-        </ol>
+    <Block index={index} id="deadlines" title="Dates that matter">
+      <div className="timeline">
+        {deadlines.map((d, i) => (
+          <div className={`tl-item ${d.urgency}`} key={i}>
+            <div className="tl-top">
+              <span className="tl-date">{d.date}</span>
+              <span className={`badge ${urgencyBadge(d.urgency)}`}>
+                {d.urgency}
+              </span>
+            </div>
+            <div className="tl-action">{d.action}</div>
+            <div className="tl-detail">{d.detail}</div>
+            {d.statute ? (
+              <div className="tl-statute">
+                <Statute num={d.statute} />
+              </div>
+            ) : null}
+          </div>
+        ))}
       </div>
-    </Section>
+    </Block>
   );
 }

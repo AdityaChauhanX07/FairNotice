@@ -3,69 +3,44 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { AlertTriangle, RotateCcw, Home } from "lucide-react";
 
-const DEFAULT_MESSAGE =
-  "An unexpected error occurred while processing your request. Please try again.";
+const DEFAULT_MESSAGE = "The analysis could not be completed.";
 
-/**
- * Reads the `?message=` query param. Isolated in its own component so it can
- * sit inside a Suspense boundary — `useSearchParams` opts the subtree into
- * client-side rendering during prerendering.
- */
-function ErrorMessage() {
+/** Reads `?message=` — isolated so it can sit inside a Suspense boundary. */
+function ErrorDetail() {
   const params = useSearchParams();
   const message = params.get("message")?.trim() || DEFAULT_MESSAGE;
-  return (
-    <p className="mt-3 text-base leading-relaxed text-muted">{message}</p>
-  );
+  return <div className="e-detail">{message}</div>;
 }
 
 export default function ErrorPage() {
   return (
-    <div className="bg-glow-amber flex min-h-screen items-center justify-center px-5 py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="w-full max-w-md text-center"
-      >
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-red-500/30 bg-red-500/10">
-          <AlertTriangle className="h-8 w-8 text-red-400" />
-        </div>
+    <div className="errscreen">
+      <div className="e-ic">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3l9 16H3l9-16z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M12 9v5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="12" cy="17" r="1" fill="currentColor" />
+        </svg>
+      </div>
+      <h1>Something went wrong.</h1>
+      <p>
+        We could not finish analyzing your document. Your information was not
+        lost, and nothing was stored.
+      </p>
 
-        <h1 className="mt-6 text-2xl font-bold tracking-tight sm:text-3xl">
-          Something went wrong
-        </h1>
+      <Suspense fallback={<div className="e-detail">{DEFAULT_MESSAGE}</div>}>
+        <ErrorDetail />
+      </Suspense>
 
-        <Suspense
-          fallback={
-            <p className="mt-3 text-base leading-relaxed text-muted">
-              {DEFAULT_MESSAGE}
-            </p>
-          }
-        >
-          <ErrorMessage />
-        </Suspense>
-
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Link
-            href="/upload"
-            className="group inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-background shadow-lg shadow-accent/20 transition-all hover:bg-accent-hover hover:shadow-accent/30"
-          >
-            <RotateCcw className="h-4 w-4 transition-transform group-hover:-rotate-45" />
-            Try Again
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-accent/40 hover:bg-surface-hover"
-          >
-            <Home className="h-4 w-4" />
-            Go Home
-          </Link>
-        </div>
-      </motion.div>
+      <div className="e-actions">
+        <Link className="btn btn-primary" href="/upload">
+          Try again <span className="arw">→</span>
+        </Link>
+        <Link className="btn btn-ghost" href="/">
+          Go home
+        </Link>
+      </div>
     </div>
   );
 }
