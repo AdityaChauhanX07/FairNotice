@@ -30,7 +30,8 @@ export async function chatCompletion(
 ): Promise<string> {
   const { temperature = 0.1, max_tokens = 4096 } = options;
 
-  try {
+  /** Single attempt at the completion. Throws on empty/failed responses. */
+  async function attempt(): Promise<string> {
     const completion = await getGroq().chat.completions.create({
       model: GROQ_MODEL,
       temperature,
@@ -48,6 +49,21 @@ export async function chatCompletion(
     }
 
     return content;
+  }
+
+  try {
+    try {
+      return await attempt();
+    } catch (error) {
+      // On a rate-limit (429), wait 10s and retry once before giving up.
+      const status = (error as { status?: number })?.status;
+      if (status === 429) {
+        console.log("Rate limited, retrying in 10s...");
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+        return await attempt();
+      }
+      throw error;
+    }
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown error.";

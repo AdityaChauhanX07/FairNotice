@@ -82,15 +82,18 @@ export async function POST(request: Request) {
       `## Document Extraction\n${JSON.stringify(typedExtraction)}\n\n` +
       `## Original Document Text\n${truncatedText}`;
 
-    // Two independent LLM calls, run concurrently.
+    // Two independent LLM calls, run sequentially to spread token usage across
+    // a wider time window and stay under the Groq rate limit. processingTime
+    // remains the total wall time for both calls.
     const startTime = Date.now();
     let explanationRaw: string;
     let actionPlanRaw: string;
     try {
-      [explanationRaw, actionPlanRaw] = await Promise.all([
-        chatCompletion(getExplanationPrompt(language), userMessage),
-        chatCompletion(getActionPlanPrompt(), userMessage),
-      ]);
+      explanationRaw = await chatCompletion(
+        getExplanationPrompt(language),
+        userMessage
+      );
+      actionPlanRaw = await chatCompletion(getActionPlanPrompt(), userMessage);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error.";
       return NextResponse.json(

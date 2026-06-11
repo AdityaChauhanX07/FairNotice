@@ -374,6 +374,10 @@ export async function runAnalysisPipeline({
   model = analyzeData.model || model;
   statutesReferenced = analyzeData.statutesMatched ?? 0;
 
+  // Brief pause before Step 4 to spread Groq token usage across the rate-limit
+  // window (free tier is 12k TPM; Steps 1-3 may have spent the current minute).
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
   // Step 4 — Generate the plain-language explanation and action plan.
   const explainData = await callStep<ExplainData>(4, "/api/explain", {
     method: "POST",
