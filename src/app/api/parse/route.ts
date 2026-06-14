@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { PDFParse } from "pdf-parse";
-import { createWorker } from "tesseract.js";
 
 // pdf-parse and tesseract.js rely on Node.js APIs, so this route must run on
 // the Node.js runtime rather than the Edge runtime.
@@ -53,12 +51,21 @@ async function extractDirect(buffer: Buffer): Promise<string> {
 }
 
 async function extractPdf(buffer: Buffer): Promise<string> {
+  const { PDFParse } = await import("pdf-parse");
   const parser = new PDFParse({ data: buffer });
   const result = await parser.getText();
   return result.text;
 }
 
 async function extractImage(buffer: Buffer): Promise<string> {
+  let createWorker: (typeof import("tesseract.js"))["createWorker"];
+  try {
+    ({ createWorker } = await import("tesseract.js"));
+  } catch {
+    throw new Error(
+      "OCR is not available in this environment. Please upload a PDF or text file instead."
+    );
+  }
   const worker = await createWorker("eng");
   try {
     const { data } = await worker.recognize(buffer);
